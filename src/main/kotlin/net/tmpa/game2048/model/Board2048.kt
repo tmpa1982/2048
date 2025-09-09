@@ -3,6 +3,18 @@ package net.tmpa.game2048.model
 class Board2048 {
     companion object {
         const val SIZE = 4
+
+        private val allowedInitialValues = listOf(CellValue.EMPTY, CellValue.V2)
+
+        fun initializeRandomBoard() : Board2048 {
+            val board = Board2048()
+            for (r in 0 until SIZE) {
+                for (c in 0 until SIZE) {
+                    board.setCellValue(r, c, allowedInitialValues.random())
+                }
+            }
+            return board
+        }
     }
 
     private val board: Array<Array<CellValue>> = Array(SIZE) { Array(SIZE) { CellValue.EMPTY } }
