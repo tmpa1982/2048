@@ -6,11 +6,11 @@ class Board2048 {
 
         private val allowedInitialValues = listOf(CellValue.EMPTY, CellValue.V2)
 
-        fun initializeRandomBoard() : Board2048 {
+        fun initializeRandomBoard(valueGenerator: () -> CellValue = { allowedInitialValues.random() }) : Board2048 {
             val board = Board2048()
             for (r in 0 until SIZE) {
                 for (c in 0 until SIZE) {
-                    board.setCellValue(r, c, allowedInitialValues.random())
+                    board.setCellValue(r, c, valueGenerator())
                 }
             }
             return board
