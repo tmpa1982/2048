@@ -110,5 +110,28 @@ class Board2048Test {
 
             assertEquals(expectedBoard, mergedBoard)
         }
+
+        @Test
+        fun `merge down`() {
+            val board = Board2048(
+                arrayOf(
+                    arrayOf(CellValue.EMPTY, CellValue.V2, CellValue.V4, CellValue.EMPTY),
+                    arrayOf(CellValue.EMPTY, CellValue.EMPTY, CellValue.V8, CellValue.V8),
+                    arrayOf(CellValue.V16, CellValue.V16, CellValue.EMPTY, CellValue.V16),
+                    arrayOf(CellValue.V2, CellValue.V4, CellValue.V8, CellValue.V16),
+                )
+            )
+            val mergedBoard = board.mergeDown()
+
+            val expectedBoard = Board2048(
+                arrayOf(
+                    arrayOf(CellValue.EMPTY, CellValue.EMPTY, CellValue.EMPTY, CellValue.EMPTY),
+                    arrayOf(CellValue.EMPTY, CellValue.V2, CellValue.EMPTY, CellValue.EMPTY),
+                    arrayOf(CellValue.V16, CellValue.V16, CellValue.V4, CellValue.V8),
+                    arrayOf(CellValue.V2, CellValue.V4, CellValue.V16, CellValue.V32),
+                )
+            )
+            assertEquals(expectedBoard, mergedBoard)
+        }
     }
 }
