@@ -12,8 +12,8 @@ class Board2048Test {
         fun `initialized board contains only allowed initial values`() {
             val allowedInitialValues = listOf(CellValue.EMPTY, CellValue.V2)
             val board = Board2048.initializeRandomBoard()
-            for (r in 0 until Board2048.SIZE) {
-                for (c in 0 until Board2048.SIZE) {
+            for (r in 0 until Board2048.DEFAULT_SIZE) {
+                for (c in 0 until Board2048.DEFAULT_SIZE) {
                     assertTrue(board.getCellValue(r, c) in allowedInitialValues)
                 }
             }
@@ -23,8 +23,8 @@ class Board2048Test {
         fun `initialized board has at least two V2 cells`() {
             val board = Board2048.initializeRandomBoard { CellValue.EMPTY }
             var v2Count = 0
-            for (r in 0 until Board2048.SIZE) {
-                for (c in 0 until Board2048.SIZE) {
+            for (r in 0 until Board2048.DEFAULT_SIZE) {
+                for (c in 0 until Board2048.DEFAULT_SIZE) {
                     if (board.getCellValue(r, c) == CellValue.V2) {
                         v2Count++
                     }

@@ -1,16 +1,16 @@
 package net.tmpa.game2048.model
 
-class Board2048(private val board: Array<Array<CellValue>> = Array(SIZE) { Array(SIZE) { CellValue.EMPTY } }) {
+class Board2048(private val board: Array<Array<CellValue>> = Array(DEFAULT_SIZE) { Array(DEFAULT_SIZE) { CellValue.EMPTY } }) {
     companion object {
-        const val SIZE = 4
+        const val DEFAULT_SIZE = 4
 
         private val allowedInitialValues = listOf(CellValue.EMPTY, CellValue.V2)
 
         fun initializeRandomBoard(valueGenerator: () -> CellValue = { allowedInitialValues.random() }) : Board2048 {
             val board = Board2048()
             var nonEmptyCount = 0
-            for (r in 0 until SIZE) {
-                for (c in 0 until SIZE) {
+            for (r in 0 until DEFAULT_SIZE) {
+                for (c in 0 until DEFAULT_SIZE) {
                     val value = valueGenerator()
                     board.setCellValue(r, c, value)
                     if (value != CellValue.EMPTY) {
@@ -28,8 +28,8 @@ class Board2048(private val board: Array<Array<CellValue>> = Array(SIZE) { Array
         private fun ensureTwoNonEmptyCells(board: Board2048) {
             var placed = 0
             while (placed < 2) {
-                val r = (0 until SIZE).random()
-                val c = (0 until SIZE).random()
+                val r = (0 until DEFAULT_SIZE).random()
+                val c = (0 until DEFAULT_SIZE).random()
                 if (board.getCellValue(r, c) == CellValue.EMPTY) {
                     board.setCellValue(r, c, CellValue.V2)
                     placed++
