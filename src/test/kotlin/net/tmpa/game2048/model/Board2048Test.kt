@@ -33,4 +33,32 @@ class Board2048Test {
             assertTrue(v2Count >= 2, "Board should have at least two cells with value 2")
         }
     }
+
+    @Nested
+    inner class MergeBoard {
+        @Test
+        fun `merge left`() {
+            val board = Board2048(
+                arrayOf(
+                    arrayOf(CellValue.EMPTY, CellValue.V2, CellValue.V4, CellValue.EMPTY),
+                    arrayOf(CellValue.EMPTY, CellValue.EMPTY, CellValue.V8, CellValue.V8),
+                    arrayOf(CellValue.V16, CellValue.V16, CellValue.EMPTY, CellValue.V16),
+                    arrayOf(CellValue.V2, CellValue.V4, CellValue.V8, CellValue.V16),
+                )
+            )
+
+            val mergedBoard = board.mergeLeft()
+
+            val expectedBoard = Board2048(
+                arrayOf(
+                    arrayOf(CellValue.V2, CellValue.V4, CellValue.EMPTY, CellValue.EMPTY),
+                    arrayOf(CellValue.V16, CellValue.EMPTY, CellValue.EMPTY, CellValue.EMPTY),
+                    arrayOf(CellValue.V32, CellValue.V16, CellValue.EMPTY, CellValue.EMPTY),
+                    arrayOf(CellValue.V2, CellValue.V4, CellValue.V8, CellValue.V16),
+                )
+            )
+
+            assertEquals(expectedBoard, mergedBoard)
+        }
+    }
 }

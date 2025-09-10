@@ -1,6 +1,6 @@
 package net.tmpa.game2048.model
 
-class Board2048 {
+class Board2048(private val board: Array<Array<CellValue>> = Array(SIZE) { Array(SIZE) { CellValue.EMPTY } }) {
     companion object {
         const val SIZE = 4
 
@@ -38,21 +38,41 @@ class Board2048 {
         }
     }
 
-    private val board: Array<Array<CellValue>> = Array(SIZE) { Array(SIZE) { CellValue.EMPTY } }
-
     fun getCellValue(row: Int, col: Int): CellValue {
         return board[row][col]
     }
 
-    fun setCellValue(row: Int, col: Int, value: CellValue) {
+    private fun setCellValue(row: Int, col: Int, value: CellValue) {
         board[row][col] = value
     }
 
-    fun clear() {
+    fun mergeLeft(): Board2048 {
+        val newBoard = Board2048()
         for (r in 0 until SIZE) {
+            val lane = EvaluationLane(board[r].toList())
+            val evaluatedLane = lane.evaluate()
             for (c in 0 until SIZE) {
-                board[r][c] = CellValue.EMPTY
+                newBoard.setCellValue(r, c, evaluatedLane.cells[c])
             }
         }
+        return newBoard
+    }
+
+    override fun equals(other: Any?): Boolean {
+        if (this === other) return true
+        if (other !is Board2048) return false
+
+        for (r in 0 until SIZE) {
+            for (c in 0 until SIZE) {
+                if (this.getCellValue(r, c) != other.getCellValue(r, c)) {
+                    return false
+                }
+            }
+        }
+        return true
+    }
+
+    override fun hashCode(): Int {
+        return board.contentDeepHashCode()
     }
 }
