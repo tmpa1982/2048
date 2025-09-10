@@ -134,4 +134,20 @@ class Board2048Test {
             assertEquals(expectedBoard, mergedBoard)
         }
     }
+
+    @Nested
+    inner class Evaluation {
+        @Test
+        fun `board is winning when it contains V2048 cell`() {
+            val winningBoard = Board2048(
+                arrayOf(
+                    arrayOf(CellValue.V2, CellValue.V4, CellValue.V8, CellValue.V16),
+                    arrayOf(CellValue.V32, CellValue.V64, CellValue.V128, CellValue.V256),
+                    arrayOf(CellValue.V512, CellValue.V1024, CellValue.V2048, CellValue.EMPTY),
+                    arrayOf(CellValue.EMPTY, CellValue.EMPTY, CellValue.EMPTY, CellValue.EMPTY),
+                )
+            )
+            assertTrue(winningBoard.isWinning())
+        }
+    }
 }

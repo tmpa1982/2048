@@ -111,4 +111,6 @@ class Board2048(private val board: Array<Array<CellValue>> = Array(SIZE) { Array
     override fun hashCode(): Int {
         return board.contentDeepHashCode()
     }
+
+    fun isWinning() = board.any { row -> row.any { cell -> cell == CellValue.V2048 } }
 }
