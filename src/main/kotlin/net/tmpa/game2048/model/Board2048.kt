@@ -70,6 +70,18 @@ class Board2048(private val board: Array<Array<CellValue>> = Array(SIZE) { Array
         return newBoard
     }
 
+    fun mergeUp(): Board2048 {
+        val newBoard = Board2048()
+        for (c in 0 until SIZE) {
+            val lane = EvaluationLane(List(SIZE) { r -> board[r][c] })
+            val evaluatedLane = lane.evaluate()
+            for (r in 0 until SIZE) {
+                newBoard.setCellValue(r, c, evaluatedLane.cells[r])
+            }
+        }
+        return newBoard
+    }
+
     override fun equals(other: Any?): Boolean {
         if (this === other) return true
         if (other !is Board2048) return false
