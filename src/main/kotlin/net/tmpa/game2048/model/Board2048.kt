@@ -131,4 +131,6 @@ class Board2048(private val board: Array<Array<CellValue>> = Array(DEFAULT_SIZE)
 
         return true
     }
+
+    fun asList() = board.map { it.toList() }
 }

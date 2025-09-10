@@ -1,4 +1,5 @@
 package net.tmpa.game2048.dto
 
-class EvaluationResponse {
-}
+import net.tmpa.game2048.model.CellValue
+
+class EvaluationResponse(val board: List<List<CellValue>>)
