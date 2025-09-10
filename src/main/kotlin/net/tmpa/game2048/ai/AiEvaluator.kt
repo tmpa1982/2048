@@ -2,6 +2,7 @@ package net.tmpa.game2048.ai
 
 import com.azure.identity.DefaultAzureCredentialBuilder
 import dev.langchain4j.model.azure.AzureOpenAiChatModel
+import dev.langchain4j.model.chat.request.ResponseFormat
 import dev.langchain4j.service.AiServices
 import org.springframework.beans.factory.annotation.Value
 import org.springframework.stereotype.Service
@@ -18,6 +19,7 @@ class AiEvaluator(
             .endpoint(endpoint)
             .deploymentName("gpt-4o-mini")
             .tokenCredential(credential)
+            .responseFormat(ResponseFormat.JSON)
             .build()
 
         val evaluator = AiServices.builder(GameEvaluator::class.java)
