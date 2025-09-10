@@ -113,4 +113,22 @@ class Board2048(private val board: Array<Array<CellValue>> = Array(SIZE) { Array
     }
 
     fun isWinning() = board.any { row -> row.any { cell -> cell == CellValue.V2048 } }
+
+    fun isLosing(): Boolean {
+        for (r in 0 until SIZE) {
+            for (c in 0 until SIZE) {
+                if (getCellValue(r, c) == CellValue.EMPTY) {
+                    return false
+                }
+                if (c < SIZE - 1 && getCellValue(r, c) == getCellValue(r, c + 1)) {
+                    return false
+                }
+                if (r < SIZE - 1 && getCellValue(r, c) == getCellValue(r + 1, c)) {
+                    return false
+                }
+            }
+        }
+
+        return true
+    }
 }

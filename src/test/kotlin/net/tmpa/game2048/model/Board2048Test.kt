@@ -148,6 +148,59 @@ class Board2048Test {
                 )
             )
             assertTrue(winningBoard.isWinning())
+            assertFalse(winningBoard.isLosing())
+        }
+
+        @Test
+        fun `board is losing when no moves are possible`() {
+            val losingBoard = Board2048(
+                arrayOf(
+                    arrayOf(CellValue.V2, CellValue.V4, CellValue.V2, CellValue.V4),
+                    arrayOf(CellValue.V4, CellValue.V2, CellValue.V4, CellValue.V2),
+                    arrayOf(CellValue.V2, CellValue.V4, CellValue.V2, CellValue.V4),
+                    arrayOf(CellValue.V4, CellValue.V2, CellValue.V4, CellValue.V2),
+                )
+            )
+            assertTrue(losingBoard.isLosing())
+        }
+
+        @Test
+        fun `board is not losing when two horizontal neighboring cells can be merged`() {
+            val board = Board2048(
+                arrayOf(
+                    arrayOf(CellValue.V2, CellValue.V2, CellValue.V4, CellValue.V8),
+                    arrayOf(CellValue.V16, CellValue.V32, CellValue.V64, CellValue.V128),
+                    arrayOf(CellValue.V256, CellValue.V512, CellValue.V1024, CellValue.V2),
+                    arrayOf(CellValue.V4, CellValue.V8, CellValue.V16, CellValue.V32),
+                )
+            )
+            assertFalse(board.isLosing())
+        }
+
+        @Test
+        fun `board is not losing when two vertical neighboring cells can be merged`() {
+            val board = Board2048(
+                arrayOf(
+                    arrayOf(CellValue.V2, CellValue.V4, CellValue.V8, CellValue.V16),
+                    arrayOf(CellValue.V2, CellValue.V32, CellValue.V64, CellValue.V128),
+                    arrayOf(CellValue.V256, CellValue.V512, CellValue.V1024, CellValue.V2),
+                    arrayOf(CellValue.V4, CellValue.V8, CellValue.V16, CellValue.V32),
+                )
+            )
+            assertFalse(board.isLosing())
+        }
+
+        @Test
+        fun `board is not losing when at least one cell is empty`() {
+            val board = Board2048(
+                arrayOf(
+                    arrayOf(CellValue.EMPTY, CellValue.V4, CellValue.V2, CellValue.V4),
+                    arrayOf(CellValue.V4, CellValue.V2, CellValue.V4, CellValue.V2),
+                    arrayOf(CellValue.V2, CellValue.V4, CellValue.V2, CellValue.V4),
+                    arrayOf(CellValue.V4, CellValue.V2, CellValue.V4, CellValue.V2),
+                )
+            )
+            assertFalse(board.isLosing())
         }
     }
 }
