@@ -35,7 +35,7 @@ class GameTools {
     }
 
     private fun merge(board: BoardDto, direction: MoveDirection): BoardDto {
-        val result = BoardDto(Board2048.createFromList(board.cells, board.size).nextBoard(direction).asList().flatten(), board.size)
+        val result = BoardDto(Board2048.createFromList(board.cells, board.size).nextBoard(direction).asFlatList(), board.size)
         logger.info("Tools call - merging $direction on board: $board. Result: ${result.cells}")
         return result
     }

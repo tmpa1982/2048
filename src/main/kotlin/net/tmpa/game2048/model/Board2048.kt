@@ -152,6 +152,8 @@ class Board2048(private val board: Array<Array<CellValue>> = Array(DEFAULT_SIZE)
 
     fun asList() = board.map { it.toList() }
 
+    fun asFlatList() = board.flatten()
+
     val size: Int
         get() = board.size
 }
