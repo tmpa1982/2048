@@ -2,7 +2,7 @@ package net.tmpa.game2048.controller
 
 import net.tmpa.game2048.ai.AiServiceFactory
 import net.tmpa.game2048.ai.GameEvaluator
-import net.tmpa.game2048.ai.MoveDirection
+import net.tmpa.game2048.model.MoveDirection
 import net.tmpa.game2048.ai.MoveEvaluation
 import net.tmpa.game2048.config.TestConfig
 import net.tmpa.game2048.dto.EvaluationRequest

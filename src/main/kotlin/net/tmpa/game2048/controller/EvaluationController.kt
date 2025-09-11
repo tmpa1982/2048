@@ -1,7 +1,7 @@
 package net.tmpa.game2048.controller
 
 import net.tmpa.game2048.ai.AiEvaluator
-import net.tmpa.game2048.ai.MoveDirection
+import net.tmpa.game2048.model.MoveDirection
 import net.tmpa.game2048.dto.EvaluationRequest
 import net.tmpa.game2048.dto.EvaluationResponse
 import net.tmpa.game2048.model.Board2048
@@ -11,7 +11,6 @@ import org.springframework.web.bind.annotation.PostMapping
 import org.springframework.web.bind.annotation.RequestBody
 import org.springframework.web.bind.annotation.RequestMapping
 import org.springframework.web.bind.annotation.RestController
-import kotlin.math.log
 
 @RestController
 @RequestMapping("/api/evaluate")

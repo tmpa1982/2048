@@ -1,8 +1,6 @@
 package net.tmpa.game2048.ai
 
-enum class MoveDirection {
-    UP, DOWN, LEFT, RIGHT
-}
+import net.tmpa.game2048.model.MoveDirection
 
 data class MoveEvaluation(
     val bestMove: MoveDirection,
