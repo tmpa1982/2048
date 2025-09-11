@@ -5,11 +5,6 @@ import net.tmpa.game2048.model.Board2048
 import net.tmpa.game2048.model.CellValue
 import org.slf4j.LoggerFactory
 
-data class BoardDto(
-    val cells: List<CellValue>,
-    val size: Int,
-)
-
 class GameTools {
     private val logger = LoggerFactory.getLogger(GameTools::class.java)
 
