@@ -15,38 +15,44 @@ class GameTools {
 
     @Tool("Move the 2048 game board to the left")
     fun mergeLeft(board: BoardDto): BoardDto {
-        logger.info("Tools call - merging left for board: $board")
-        return merge(board) { it.mergeLeft() }
+        val result = merge(board) { it.mergeLeft() }
+        logger.info("Tools call - merging left: ${result.list}")
+        return result
     }
 
     @Tool("Move the 2048 game board to the right")
     fun mergeRight(board: BoardDto): BoardDto {
-        logger.info("Tools call - merging right for board: $board")
-        return merge(board) { it.mergeRight() }
+        val result = merge(board) { it.mergeRight() }
+        logger.info("Tools call - merging right: ${result.list}")
+        return result
     }
 
     @Tool("Move the 2048 game board up")
     fun mergeUp(board: BoardDto): BoardDto {
-        logger.info("Tools call - merging up for board: $board")
-        return merge(board) { it.mergeUp() }
+        val result = merge(board) { it.mergeUp() }
+        logger.info("Tools call - merging up: ${result.list}")
+        return result
     }
 
     @Tool("Move the 2048 game board down")
     fun mergeDown(board: BoardDto): BoardDto {
-        logger.info("Tools call - merging down for board: $board")
-        return merge(board) { it.mergeDown() }
+        val result = merge(board) { it.mergeDown() }
+        logger.info("Tools call - merging down for board: ${result.list}")
+        return result
     }
 
     @Tool("Evaluate if the 2048 game board is winning")
     fun isWinning(board: BoardDto): Boolean {
-        logger.info("Tools call - evaluating if board is winning: $board")
-        return createTwoDimensionalBoard(board).isWinning()
+        val result = createTwoDimensionalBoard(board).isWinning()
+        logger.info("Tools call - evaluating if ${board.list} is winning: $result")
+        return result
     }
 
     @Tool("Evaluate if the 2048 game board is losing")
     fun isLosing(board: BoardDto): Boolean {
-        logger.info("Tools call - evaluating if board is losing: $board")
-        return createTwoDimensionalBoard(board).isLosing()
+        val result = createTwoDimensionalBoard(board).isLosing()
+        logger.info("Tools call - evaluating if ${board.list} is losing: $result")
+        return result
     }
 
     private fun merge(board: BoardDto, transformer: (Board2048) -> Board2048) =
