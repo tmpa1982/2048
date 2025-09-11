@@ -47,7 +47,7 @@ class Board2048Test {
                 )
             )
 
-            val mergedBoard = board.mergeLeft()
+            val mergedBoard = board.nextBoard(MoveDirection.LEFT)
 
             val expectedBoard = Board2048(
                 arrayOf(
@@ -72,7 +72,7 @@ class Board2048Test {
                 )
             )
 
-            val mergedBoard = board.mergeRight()
+            val mergedBoard = board.nextBoard(MoveDirection.RIGHT)
 
             val expectedBoard = Board2048(
                 arrayOf(
@@ -97,7 +97,7 @@ class Board2048Test {
                 )
             )
 
-            val mergedBoard = board.mergeUp()
+            val mergedBoard = board.nextBoard(MoveDirection.UP)
 
             val expectedBoard = Board2048(
                 arrayOf(
@@ -121,7 +121,7 @@ class Board2048Test {
                     arrayOf(CellValue.V2, CellValue.V4, CellValue.V8, CellValue.V16),
                 )
             )
-            val mergedBoard = board.mergeDown()
+            val mergedBoard = board.nextBoard(MoveDirection.DOWN)
 
             val expectedBoard = Board2048(
                 arrayOf(
