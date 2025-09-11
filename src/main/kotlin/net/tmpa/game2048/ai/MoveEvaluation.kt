@@ -1,3 +1,7 @@
 package net.tmpa.game2048.ai
 
-data class MoveEvaluation(val bestMove: String, val score: Int)
+enum class MoveDirection {
+    UP, DOWN, LEFT, RIGHT
+}
+
+data class MoveEvaluation(val bestMove: MoveDirection, val score: Int)
