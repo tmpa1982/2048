@@ -1,6 +1,6 @@
 package net.tmpa.game2048.controller
 
-import net.tmpa.game2048.ai.AiEvaluator
+import net.tmpa.game2048.ai.NextMoveEvaluatorService
 import net.tmpa.game2048.dto.EvaluationRequest
 import net.tmpa.game2048.dto.EvaluationResponse
 import org.slf4j.LoggerFactory
@@ -11,7 +11,7 @@ import org.springframework.web.bind.annotation.RestController
 
 @RestController
 @RequestMapping("/api/evaluate")
-class EvaluationController(private val evaluator: AiEvaluator) {
+class EvaluationController(private val evaluator: NextMoveEvaluatorService) {
     private val logger = LoggerFactory.getLogger(EvaluationController::class.java)
 
     @PostMapping

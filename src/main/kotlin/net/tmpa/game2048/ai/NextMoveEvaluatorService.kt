@@ -6,7 +6,7 @@ import net.tmpa.game2048.model.Board2048
 import org.springframework.stereotype.Service
 
 @Service
-class AiEvaluator(
+class NextMoveEvaluatorService(
     private val gameEvaluatorFactory: AiServiceFactory,
 ) {
     fun evaluate(request: EvaluationRequest): EvaluationResponse {
