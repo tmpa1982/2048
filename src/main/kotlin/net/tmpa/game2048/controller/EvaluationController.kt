@@ -3,7 +3,6 @@ package net.tmpa.game2048.controller
 import net.tmpa.game2048.ai.AiEvaluator
 import net.tmpa.game2048.dto.EvaluationRequest
 import net.tmpa.game2048.dto.EvaluationResponse
-import net.tmpa.game2048.model.Board2048
 import org.slf4j.LoggerFactory
 import org.springframework.web.bind.annotation.PostMapping
 import org.springframework.web.bind.annotation.RequestBody
@@ -18,10 +17,7 @@ class EvaluationController(private val evaluator: AiEvaluator) {
     @PostMapping
     fun evaluateBoard(@RequestBody request: EvaluationRequest): EvaluationResponse {
         logger.info("Evaluating board: ${request.board}")
-        val board = Board2048(request.board)
-        val moveEvaluation = evaluator.evaluate(board)
-
-        val response = EvaluationResponse(moveEvaluation, board.nextBoard(moveEvaluation.bestMove).asList())
+        val response = evaluator.evaluate(request)
         logger.info("Evaluation result: ${response.evaluation}, Next board: ${response.board}")
         return response
     }
