@@ -55,8 +55,10 @@ class GameTools {
         return result
     }
 
-    private fun merge(board: BoardDto, transformer: (Board2048) -> Board2048) =
-        BoardDto(transformer(createTwoDimensionalBoard(board)).asList().flatten(), board.size)
+    private fun merge(board: BoardDto, transformer: (Board2048) -> Board2048): BoardDto {
+        logger.info("Tools call - merging board: $board")
+        return BoardDto(transformer(createTwoDimensionalBoard(board)).asList().flatten(), board.size)
+    }
 
     private fun createTwoDimensionalBoard(board: BoardDto): Board2048 {
         val size = board.size
