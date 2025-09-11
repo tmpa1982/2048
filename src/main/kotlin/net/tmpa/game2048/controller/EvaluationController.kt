@@ -16,9 +16,7 @@ class EvaluationController(private val evaluator: AiEvaluator) {
     @PostMapping
     fun evaluateBoard(@RequestBody request: EvaluationRequest): EvaluationResponse {
         val board = Board2048(request.board.map { it.toTypedArray<CellValue>() }.toTypedArray<Array<CellValue>>())
-        val boardString = board.asList().toString()
-        println("Received board for evaluation: $boardString")
-        val aiResult = evaluator.evaluate(boardString)
+        val aiResult = evaluator.evaluate(board)
         println("AI Evaluation Result: $aiResult")
 
         return EvaluationResponse(board.asList())

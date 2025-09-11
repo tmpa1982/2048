@@ -2,6 +2,7 @@ package net.tmpa.game2048.ai
 
 import dev.langchain4j.service.SystemMessage
 import dev.langchain4j.service.UserMessage
+import net.tmpa.game2048.model.CellValue
 
 interface GameEvaluator {
     @SystemMessage(
@@ -11,5 +12,5 @@ interface GameEvaluator {
         Respond in JSON format with the best move.
         """
     )
-    fun evaluate(@UserMessage board: String): MoveEvaluation
+    fun evaluate(@UserMessage board: List<List<CellValue>>): MoveEvaluation
 }

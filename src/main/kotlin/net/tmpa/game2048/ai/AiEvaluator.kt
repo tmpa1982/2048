@@ -4,6 +4,7 @@ import com.azure.identity.DefaultAzureCredentialBuilder
 import dev.langchain4j.model.azure.AzureOpenAiChatModel
 import dev.langchain4j.model.chat.request.ResponseFormat
 import dev.langchain4j.service.AiServices
+import net.tmpa.game2048.model.Board2048
 import org.springframework.beans.factory.annotation.Value
 import org.springframework.stereotype.Service
 
@@ -12,7 +13,7 @@ class AiEvaluator(
     @Value($$"${azure.openai.endpoint}") private val endpoint: String,
 ) {
 
-    fun evaluate(board: String): MoveEvaluation {
+    fun evaluate(board: Board2048): MoveEvaluation {
         val credential = DefaultAzureCredentialBuilder().build()
 
         val model = AzureOpenAiChatModel.builder()
@@ -26,6 +27,6 @@ class AiEvaluator(
             .chatModel(model)
             .build()
 
-        return evaluator.evaluate(board)
+        return evaluator.evaluate(board.asList())
     }
 }
