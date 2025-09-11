@@ -3,38 +3,23 @@ package net.tmpa.game2048.ai
 import dev.langchain4j.agent.tool.Tool
 import net.tmpa.game2048.model.Board2048
 import net.tmpa.game2048.model.CellValue
+import net.tmpa.game2048.model.MoveDirection
 import org.slf4j.LoggerFactory
 
 class GameTools {
     private val logger = LoggerFactory.getLogger(GameTools::class.java)
 
     @Tool("Move the 2048 game board to the left")
-    fun mergeLeft(board: BoardDto): BoardDto {
-        val result = merge(board) { it.mergeLeft() }
-        logger.info("Tools call - merging left: ${result.cells}")
-        return result
-    }
+    fun mergeLeft(board: BoardDto) = merge(board, MoveDirection.LEFT)
 
     @Tool("Move the 2048 game board to the right")
-    fun mergeRight(board: BoardDto): BoardDto {
-        val result = merge(board) { it.mergeRight() }
-        logger.info("Tools call - merging right: ${result.cells}")
-        return result
-    }
+    fun mergeRight(board: BoardDto) = merge(board, MoveDirection.RIGHT)
 
     @Tool("Move the 2048 game board up")
-    fun mergeUp(board: BoardDto): BoardDto {
-        val result = merge(board) { it.mergeUp() }
-        logger.info("Tools call - merging up: ${result.cells}")
-        return result
-    }
+    fun mergeUp(board: BoardDto) = merge(board, MoveDirection.UP)
 
     @Tool("Move the 2048 game board down")
-    fun mergeDown(board: BoardDto): BoardDto {
-        val result = merge(board) { it.mergeDown() }
-        logger.info("Tools call - merging down for board: ${result.cells}")
-        return result
-    }
+    fun mergeDown(board: BoardDto) = merge(board, MoveDirection.DOWN)
 
     @Tool("Evaluate if the 2048 game board is winning")
     fun isWinning(board: BoardDto): Boolean {
@@ -50,9 +35,10 @@ class GameTools {
         return result
     }
 
-    private fun merge(board: BoardDto, transformer: (Board2048) -> Board2048): BoardDto {
-        logger.info("Tools call - merging board: $board")
-        return BoardDto(transformer(createTwoDimensionalBoard(board)).asList().flatten(), board.size)
+    private fun merge(board: BoardDto, direction: MoveDirection): BoardDto {
+        val result = BoardDto(createTwoDimensionalBoard(board).nextBoard(direction).asList().flatten(), board.size)
+        logger.info("Tools call - merging $direction on board: $board. Result: ${result.cells}")
+        return result
     }
 
     private fun createTwoDimensionalBoard(board: BoardDto): Board2048 {
