@@ -12,7 +12,8 @@ interface GameEvaluator {
         - For example, for a 4x4 board, the size is 4 and the cells are provided as a list of 16 values in row-major order.
         - **Your final output must only recommend the immediate next move** from the current board given as input.
         - Do not propose moves based on boards you have already modified.
-        - Respond in JSON format like: {"bestMove": "UP"}.
+        - Explain why you chose the move in your reasoning.
+        - Respond in JSON format like: {"bestMove": "UP", "reasoning": "reason why you think this is the best move"}.
     """)
     fun evaluate(@UserMessage board: BoardDto): MoveEvaluation
 }
