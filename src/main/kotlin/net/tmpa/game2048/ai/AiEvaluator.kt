@@ -30,6 +30,7 @@ class AiEvaluator(
             .tools(tools)
             .build()
 
-        return evaluator.evaluate(board.asList())
+        val boardList = board.asList()
+        return evaluator.evaluate(BoardDto(boardList.flatten(), boardList.size))
     }
 }
