@@ -58,4 +58,18 @@ class EvaluationControllerIntegrationTest {
         assertEquals(HttpStatus.OK, response.statusCode)
         assertEquals(moveEvaluation, response.body!!.evaluation)
     }
+
+    @Test
+    fun `returns 400 for invalid board`() {
+        val request = EvaluationRequest(
+            board = listOf(
+                listOf(CellValue.V2, CellValue.V4, CellValue.V2),
+                listOf(CellValue.V2, CellValue.EMPTY, CellValue.V2, CellValue.V2),
+                listOf(CellValue.V2, CellValue.EMPTY, CellValue.V2, CellValue.V2),
+                listOf(CellValue.EMPTY, CellValue.V4, CellValue.EMPTY, CellValue.V2),
+            ),
+        )
+        val response = restTemplate.postForEntity("/api/evaluate", HttpEntity(request), String::class.java)
+        assertEquals(HttpStatus.BAD_REQUEST, response.statusCode)
+    }
 }
