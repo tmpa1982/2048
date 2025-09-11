@@ -1,7 +1,6 @@
 package net.tmpa.game2048.controller
 
 import net.tmpa.game2048.ai.AiEvaluator
-import net.tmpa.game2048.model.MoveDirection
 import net.tmpa.game2048.dto.EvaluationRequest
 import net.tmpa.game2048.dto.EvaluationResponse
 import net.tmpa.game2048.model.Board2048
@@ -23,15 +22,8 @@ class EvaluationController(private val evaluator: AiEvaluator) {
         val board = Board2048(request.board.map { it.toTypedArray<CellValue>() }.toTypedArray<Array<CellValue>>())
         val moveEvaluation = evaluator.evaluate(board)
 
-        val response = EvaluationResponse(moveEvaluation, nextBoard(board, moveEvaluation.bestMove).asList())
+        val response = EvaluationResponse(moveEvaluation, board.nextBoard(moveEvaluation.bestMove).asList())
         logger.info("Evaluation result: ${response.evaluation}, Next board: ${response.board}")
         return response
-    }
-
-    private fun nextBoard(board: Board2048, move: MoveDirection) = when (move) {
-        MoveDirection.LEFT -> board.mergeLeft()
-        MoveDirection.RIGHT -> board.mergeRight()
-        MoveDirection.UP -> board.mergeUp()
-        MoveDirection.DOWN -> board.mergeDown()
     }
 }

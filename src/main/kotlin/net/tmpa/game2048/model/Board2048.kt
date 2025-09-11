@@ -49,6 +49,15 @@ class Board2048(private val board: Array<Array<CellValue>> = Array(DEFAULT_SIZE)
         board[row][col] = value
     }
 
+    fun nextBoard(direction: MoveDirection): Board2048 {
+        return when (direction) {
+            MoveDirection.LEFT -> mergeLeft()
+            MoveDirection.RIGHT -> mergeRight()
+            MoveDirection.UP -> mergeUp()
+            MoveDirection.DOWN -> mergeDown()
+        }
+    }
+
     fun mergeLeft(): Board2048 {
         val newBoard = Board2048()
         for (r in 0 until board.size) {
