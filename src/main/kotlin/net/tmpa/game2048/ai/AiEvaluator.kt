@@ -13,6 +13,8 @@ class AiEvaluator(
     @Value($$"${azure.openai.endpoint}") private val endpoint: String,
 ) {
 
+    private val tools = GameTools()
+
     fun evaluate(board: Board2048): MoveEvaluation {
         val credential = DefaultAzureCredentialBuilder().build()
 
@@ -25,6 +27,7 @@ class AiEvaluator(
 
         val evaluator = AiServices.builder(GameEvaluator::class.java)
             .chatModel(model)
+            .tools(tools)
             .build()
 
         return evaluator.evaluate(board.asList())

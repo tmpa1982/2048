@@ -38,6 +38,9 @@ class Board2048(private val board: Array<Array<CellValue>> = Array(DEFAULT_SIZE)
         }
     }
 
+    constructor(board: List<List<CellValue>>):
+        this(Array(board.size) { r -> Array(board.size) { c -> board[r][c] } })
+
     fun getCellValue(row: Int, col: Int): CellValue {
         return board[row][col]
     }
