@@ -36,6 +36,12 @@ class Board2048(private val board: Array<Array<CellValue>> = Array(DEFAULT_SIZE)
                 }
             }
         }
+
+        fun createFromList(cells: List<CellValue>, size: Int = DEFAULT_SIZE): Board2048 {
+            require(cells.size == size * size) { "The number of cells must be equal to size*size" }
+            val boardArray = Array(size) { r -> Array(size) { c -> cells[r * size + c] } }
+            return Board2048(boardArray)
+        }
     }
 
     constructor(board: List<List<CellValue>>):
@@ -145,4 +151,7 @@ class Board2048(private val board: Array<Array<CellValue>> = Array(DEFAULT_SIZE)
     }
 
     fun asList() = board.map { it.toList() }
+
+    val size: Int
+        get() = board.size
 }

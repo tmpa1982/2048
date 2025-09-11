@@ -2,6 +2,7 @@ package net.tmpa.game2048.model
 
 import org.junit.jupiter.api.Assertions.*
 import org.junit.jupiter.api.Nested
+import org.junit.jupiter.api.assertThrows
 import kotlin.test.Test
 
 class Board2048Test {
@@ -201,6 +202,39 @@ class Board2048Test {
                 )
             )
             assertFalse(board.isLosing())
+        }
+    }
+
+    @Nested
+    inner class Transformation {
+        @Test
+        fun `board can be transformed from list`() {
+            val flattenedList = listOf(CellValue.V2, CellValue.V4, CellValue.V8, CellValue.V16)
+            val expected = Board2048(
+                arrayOf(
+                    arrayOf(CellValue.V2, CellValue.V4),
+                    arrayOf(CellValue.V8, CellValue.V16),
+                )
+            )
+            val actual = Board2048.createFromList(flattenedList, 2)
+            assertEquals(expected, actual)
+        }
+
+        @Test
+        fun `throws if list has less elements`() {
+            val flattenedList = listOf(CellValue.V2, CellValue.V4, CellValue.V8)
+            assertThrows<IllegalArgumentException> {
+                Board2048.createFromList(flattenedList, 2)
+            }
+        }
+
+
+        @Test
+        fun `throws if list has more elements`() {
+            val flattenedList = listOf(CellValue.V2, CellValue.V4, CellValue.V8, CellValue.V16, CellValue.V32)
+            assertThrows<IllegalArgumentException> {
+                Board2048.createFromList(flattenedList, 2)
+            }
         }
     }
 }
