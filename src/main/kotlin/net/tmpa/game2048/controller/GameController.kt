@@ -31,6 +31,6 @@ class GameController(private val repository: GameRepository) {
         val board = repository.get(id) ?: throw ResponseStatusException(HttpStatus.NOT_FOUND, "Game not found")
         val nextBoard = board.nextBoard(moveRequest.direction).addRandomCell()
         repository.add(id, nextBoard)
-        return MoveResponse(BoardDto(nextBoard.asList()))
+        return MoveResponse(nextBoard.isWinning(), nextBoard.isLosing(), BoardDto(nextBoard.asList()))
     }
 }

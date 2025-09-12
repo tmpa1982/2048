@@ -8,6 +8,7 @@ import net.tmpa.game2048.model.MoveDirection
 import org.junit.jupiter.api.Assertions.assertNotEquals
 import org.junit.jupiter.api.Test
 import kotlin.test.assertContains
+import kotlin.test.assertFalse
 import kotlin.test.fail
 
 class GameControllerIntegrationTest : IntegrationTestBase() {
@@ -15,16 +16,19 @@ class GameControllerIntegrationTest : IntegrationTestBase() {
     fun `let's play a game`() {
         val response = restTemplate.postForEntity("/api/game", null, CreateGameResponse::class.java)
         val gameId = response.body!!.id
-        val initialBoard = response.body!!.board
-        assertInitialBoard(initialBoard.cells)
+        val initialBoard = response.body!!.board.cells
+        assertInitialBoard(initialBoard)
 
         val moveRequest = MoveRequest(MoveDirection.DOWN)
         val moveResponse = restTemplate.postForEntity("/api/game/$gameId/move", moveRequest, MoveResponse::class.java)
-        val newBoard = moveResponse.body!!.board
-        assertBoardMovedDown(newBoard.cells)
+        val moveBody = moveResponse.body!!
+        assertFalse(moveBody.isLosing)
+        assertFalse(moveBody.isWinning)
+        val newBoardCells = moveBody.board.cells
+        assertBoardMovedDown(newBoardCells)
 
-        val initialBoardSum = initialBoard.cells.flatten().sumOf { it.value }
-        val newBoardSum = newBoard.cells.flatten().sumOf { it.value }
+        val initialBoardSum = initialBoard.flatten().sumOf { it.value }
+        val newBoardSum = newBoardCells.flatten().sumOf { it.value }
         val difference = newBoardSum - initialBoardSum
         assertContains(listOf(2, 4), difference)
     }
