@@ -1,5 +1,6 @@
 package net.tmpa.game2048.ai
 
+import net.tmpa.game2048.dto.BoardDto
 import net.tmpa.game2048.dto.EvaluationRequest
 import net.tmpa.game2048.dto.EvaluationResponse
 import net.tmpa.game2048.model.Board2048
@@ -13,7 +14,8 @@ class NextMoveEvaluatorService(
         val evaluator = gameEvaluatorFactory.createService()
         val board = Board2048(request.board)
         val moveEvaluation = evaluator.evaluate(AiBoardDto(board.asFlatList(), board.size))
-        val response = EvaluationResponse(moveEvaluation, board.nextBoard(moveEvaluation.bestMove).asList())
+        val nextBoard = board.nextBoard(moveEvaluation.bestMove)
+        val response = EvaluationResponse(moveEvaluation, BoardDto(nextBoard.asList()))
         return response
     }
 }

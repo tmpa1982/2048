@@ -32,6 +32,7 @@ dependencies {
     implementation("dev.langchain4j:langchain4j:1.4.0")
     implementation("dev.langchain4j:langchain4j-azure-open-ai:1.4.0")
     implementation("com.azure:azure-identity:1.17.0")
+    implementation("com.fasterxml.jackson.module:jackson-module-kotlin")
     testImplementation("org.springframework.boot:spring-boot-starter-restclient")
     testImplementation("org.springframework.boot:spring-boot-starter-test")
     testImplementation("org.jetbrains.kotlin:kotlin-test-junit5")
