@@ -1,42 +1,15 @@
 package net.tmpa.game2048.controller
 
-import net.tmpa.game2048.ai.AiServiceFactory
-import net.tmpa.game2048.ai.GameEvaluator
-import net.tmpa.game2048.config.TestConfig
 import net.tmpa.game2048.dto.CreateGameResponse
 import net.tmpa.game2048.dto.MoveRequest
 import net.tmpa.game2048.dto.MoveResponse
 import net.tmpa.game2048.model.CellValue
 import net.tmpa.game2048.model.MoveDirection
-import org.junit.jupiter.api.Assertions.*
-import org.junit.jupiter.api.BeforeEach
+import org.junit.jupiter.api.Assertions.assertNotEquals
 import org.junit.jupiter.api.Test
-import org.mockito.Mockito.mock
-import org.mockito.kotlin.whenever
-import org.springframework.beans.factory.annotation.Autowired
-import org.springframework.boot.test.context.SpringBootTest
-import org.springframework.boot.web.server.test.client.TestRestTemplate
-import org.springframework.context.annotation.Import
-import org.springframework.test.context.ActiveProfiles
 import kotlin.test.fail
 
-@SpringBootTest(webEnvironment = SpringBootTest.WebEnvironment.RANDOM_PORT)
-@ActiveProfiles("test")
-@Import(TestConfig::class)
-class GameControllerIntegrationTest {
-    @Autowired
-    private lateinit var restTemplate: TestRestTemplate
-
-    @Autowired
-    private lateinit var aiServiceFactory: AiServiceFactory
-
-    private val gameEvaluator = mock<GameEvaluator>()
-
-    @BeforeEach
-    fun setup() {
-        whenever(aiServiceFactory.createService()).thenReturn(gameEvaluator)
-    }
-
+class GameControllerIntegrationTest : IntegrationTestBase() {
     @Test
     fun `let's play a game`() {
         val response = restTemplate.postForEntity("/api/game", null, CreateGameResponse::class.java)
