@@ -15,5 +15,5 @@ interface GameEvaluator {
         - Explain why you chose the move in your reasoning.
         - Respond in JSON format like: {"bestMove": "UP", "reasoning": "reason why you think this is the best move"}.
     """)
-    fun evaluate(@UserMessage board: BoardDto): MoveEvaluation
+    fun evaluate(@UserMessage board: AiBoardDto): MoveEvaluation
 }

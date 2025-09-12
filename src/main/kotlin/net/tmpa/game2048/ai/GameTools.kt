@@ -9,33 +9,33 @@ class GameTools {
     private val logger = LoggerFactory.getLogger(GameTools::class.java)
 
     @Tool("Move the 2048 game board to the left")
-    fun mergeLeft(board: BoardDto) = merge(board, MoveDirection.LEFT)
+    fun mergeLeft(board: AiBoardDto) = merge(board, MoveDirection.LEFT)
 
     @Tool("Move the 2048 game board to the right")
-    fun mergeRight(board: BoardDto) = merge(board, MoveDirection.RIGHT)
+    fun mergeRight(board: AiBoardDto) = merge(board, MoveDirection.RIGHT)
 
     @Tool("Move the 2048 game board up")
-    fun mergeUp(board: BoardDto) = merge(board, MoveDirection.UP)
+    fun mergeUp(board: AiBoardDto) = merge(board, MoveDirection.UP)
 
     @Tool("Move the 2048 game board down")
-    fun mergeDown(board: BoardDto) = merge(board, MoveDirection.DOWN)
+    fun mergeDown(board: AiBoardDto) = merge(board, MoveDirection.DOWN)
 
     @Tool("Evaluate if the 2048 game board is winning")
-    fun isWinning(board: BoardDto): Boolean {
+    fun isWinning(board: AiBoardDto): Boolean {
         val result = Board2048.createFromList(board.cells, board.size).isWinning()
         logger.info("Tools call - evaluating if ${board.cells} is winning: $result")
         return result
     }
 
     @Tool("Evaluate if the 2048 game board is losing")
-    fun isLosing(board: BoardDto): Boolean {
+    fun isLosing(board: AiBoardDto): Boolean {
         val result = Board2048.createFromList(board.cells, board.size).isLosing()
         logger.info("Tools call - evaluating if ${board.cells} is losing: $result")
         return result
     }
 
-    private fun merge(board: BoardDto, direction: MoveDirection): BoardDto {
-        val result = BoardDto(Board2048.createFromList(board.cells, board.size).nextBoard(direction).asFlatList(), board.size)
+    private fun merge(board: AiBoardDto, direction: MoveDirection): AiBoardDto {
+        val result = AiBoardDto(Board2048.createFromList(board.cells, board.size).nextBoard(direction).asFlatList(), board.size)
         logger.info("Tools call - merging $direction on board: $board. Result: ${result.cells}")
         return result
     }

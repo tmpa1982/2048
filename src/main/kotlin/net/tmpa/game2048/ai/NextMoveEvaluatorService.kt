@@ -12,7 +12,7 @@ class NextMoveEvaluatorService(
     fun evaluate(request: EvaluationRequest): EvaluationResponse {
         val evaluator = gameEvaluatorFactory.createService()
         val board = Board2048(request.board)
-        val moveEvaluation = evaluator.evaluate(BoardDto(board.asFlatList(), board.size))
+        val moveEvaluation = evaluator.evaluate(AiBoardDto(board.asFlatList(), board.size))
         val response = EvaluationResponse(moveEvaluation, board.nextBoard(moveEvaluation.bestMove).asList())
         return response
     }
