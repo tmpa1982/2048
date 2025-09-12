@@ -237,4 +237,62 @@ class Board2048Test {
             }
         }
     }
+
+    @Nested
+    inner class AddRandomCell {
+        @Test
+        fun `returns the same board when trying to add a cell to a full board`() {
+            val fullBoard = Board2048(
+                arrayOf(
+                    arrayOf(CellValue.V2, CellValue.V4, CellValue.V8, CellValue.V16),
+                    arrayOf(CellValue.V32, CellValue.V64, CellValue.V128, CellValue.V256),
+                    arrayOf(CellValue.V512, CellValue.V1024, CellValue.V2048, CellValue.V2),
+                    arrayOf(CellValue.V4, CellValue.V8, CellValue.V16, CellValue.V32),
+                )
+            )
+
+            assertSame(fullBoard, fullBoard.addRandomCell())
+        }
+
+        @Test
+        fun `adds a random cell to one of the empty positions`() {
+            val boardArray = arrayOf(
+                arrayOf(CellValue.V2, CellValue.EMPTY, CellValue.V4, CellValue.EMPTY),
+                arrayOf(CellValue.EMPTY, CellValue.V8, CellValue.EMPTY, CellValue.V16),
+                arrayOf(CellValue.V32, CellValue.EMPTY, CellValue.V64, CellValue.EMPTY),
+                arrayOf(CellValue.EMPTY, CellValue.V128, CellValue.EMPTY, CellValue.V256),
+            )
+            val board = Board2048(boardArray)
+
+            val emptyCells = mutableListOf<Pair<Int, Int>>()
+            for (r in 0 until board.size) {
+                for (c in 0 until board.size) {
+                    if (boardArray[r][c] == CellValue.EMPTY) {
+                        emptyCells.add(Pair(r, c))
+                    }
+                }
+            }
+
+            fun assertModifiedBoard(targetCell: Pair<Int, Int>, boardWithNewCell: Board2048) {
+                for (r in 0 until board.size) {
+                    for (c in 0 until board.size) {
+                        if (r == targetCell.first && c == targetCell.second) {
+                            assertEquals(CellValue.V4, boardWithNewCell.getCellValue(r, c))
+                        } else {
+                            assertEquals(boardArray[r][c], boardWithNewCell.getCellValue(r, c))
+                        }
+                    }
+                }
+            }
+
+            for (targetCell in emptyCells) {
+                val boardWithNewCell = board.addRandomCell(
+                    emptyCellPicker = { targetCell },
+                    valueGenerator = { CellValue.V4 }
+                )
+
+                assertModifiedBoard(targetCell, boardWithNewCell)
+            }
+        }
+    }
 }

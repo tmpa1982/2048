@@ -64,6 +64,29 @@ class Board2048(private val board: Array<Array<CellValue>> = Array(DEFAULT_SIZE)
         }
     }
 
+    fun addRandomCell(
+        emptyCellPicker: (List<Pair<Int, Int>>) -> Pair<Int, Int> = { it.random() },
+        valueGenerator: () -> CellValue = { listOf(CellValue.V2, CellValue.V4).random() },
+    ): Board2048 {
+        val emptyCells = mutableListOf<Pair<Int, Int>>()
+        for (r in 0 until board.size) {
+            for (c in 0 until board.size) {
+                if (getCellValue(r, c) == CellValue.EMPTY) {
+                    emptyCells.add(Pair(r, c))
+                }
+            }
+        }
+
+        if (emptyCells.isEmpty()) {
+            return this
+        }
+
+        val (r, c) = emptyCellPicker(emptyCells)
+        val newBoard = Board2048(this.board.map { it.toList() })
+        newBoard.setCellValue(r, c, valueGenerator())
+        return newBoard
+    }
+
     private fun mergeLeft(): Board2048 {
         val newBoard = Board2048()
         for (r in 0 until board.size) {
