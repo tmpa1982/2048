@@ -9,6 +9,7 @@ import net.tmpa.game2048.model.MoveDirection
 import org.junit.jupiter.api.Assertions.assertNotEquals
 import org.junit.jupiter.api.Test
 import kotlin.test.assertContains
+import kotlin.test.assertEquals
 import kotlin.test.assertFalse
 import kotlin.test.fail
 
@@ -35,8 +36,12 @@ class GameControllerIntegrationTest : IntegrationTestBase() {
     }
 
     private fun assertInitialBoard(board: List<List<CellValue>>) {
-        val numEmpty = board.flatten().count { it == CellValue.EMPTY }
+        val cellValues = board.flatten()
+        val numEmpty = cellValues.count { it == CellValue.EMPTY }
         assertNotEquals(0, numEmpty, "There should be some empty cells")
+
+        val initialValue = cellValues.filter { it != CellValue.EMPTY }.distinct().single()
+        assertEquals(CellValue.V2, initialValue)
     }
 
     private fun assertBoardMovedDownExceptMaybeOne(board: List<List<CellValue>>) {
