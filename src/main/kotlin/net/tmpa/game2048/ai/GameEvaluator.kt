@@ -17,13 +17,21 @@ The board size is provided separately as an integer `size`, which indicates both
 
 ### Example
 
-For a **2x2 board**, the input will look like this:
+For a **4x4 board**, the input will look like this:
 
 ```json
 {
-  "cells": ["Row0Col0", "Row0Col1", "Row1Col0", "Row1Col1"],
-  "size": 2
+  "cells": ["Row0Col0", "Row0Col1", "Row0Col2", "Row0Col3", "Row1Col0", "Row1Col1", "Row1Col2", "Row1Col3", "Row2Col0", "Row2Col1", "Row2Col2", "Row2Col3", "Row3Col0", "Row3Col1", "Row3Col2", "Row3Col3"],
+  "size": 4
 }
+```
+
+Assuming the cells array is indexed from 0:
+
+- the top left of the board is index 0
+- the top right of the board is index 3
+- the bottom left of the board is index 12
+- the bottom right of the board is index 15
 
 ## Principles
 
