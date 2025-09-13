@@ -3,6 +3,7 @@ package net.tmpa.game2048.controller
 import net.tmpa.game2048.dto.CreateGameResponse
 import net.tmpa.game2048.dto.MoveRequest
 import net.tmpa.game2048.dto.MoveResponse
+import net.tmpa.game2048.model.Board2048
 import net.tmpa.game2048.model.CellValue
 import net.tmpa.game2048.model.MoveDirection
 import org.junit.jupiter.api.Assertions.assertNotEquals
@@ -25,7 +26,7 @@ class GameControllerIntegrationTest : IntegrationTestBase() {
         assertFalse(moveBody.isLosing)
         assertFalse(moveBody.isWinning)
         val newBoardCells = moveBody.board.cells
-        assertBoardMovedDown(newBoardCells)
+        assertBoardMovedDownExceptMaybeOne(newBoardCells)
 
         val initialBoardSum = initialBoard.flatten().sumOf { it.value }
         val newBoardSum = newBoardCells.flatten().sumOf { it.value }
@@ -38,16 +39,26 @@ class GameControllerIntegrationTest : IntegrationTestBase() {
         assertNotEquals(0, numEmpty, "There should be some empty cells")
     }
 
-    private fun assertBoardMovedDown(board: List<List<CellValue>>) {
+    private fun assertBoardMovedDownExceptMaybeOne(board: List<List<CellValue>>) {
+        var newCell: Pair<Int, Int>? = null
         for (c in 0 until board.size) {
             var foundEmpty = false
             for (r in (board.size - 1) downTo 0) {
                 if (board[r][c] == CellValue.EMPTY) {
                     foundEmpty = true
                 } else if (foundEmpty) {
-                    fail("Non-empty cell found above an empty cell in column $c")
+                    if (newCell == null) {
+                        newCell = Pair(r, c)
+                    } else {
+                        fail("More than one new cell found at (${newCell.first}, ${newCell.second}) and ($r, $c)")
+                    }
                 }
             }
+        }
+
+        // new cell can be generated next to a cell that moved down
+        if (newCell != null) {
+            assertContains(Board2048.NEW_CELL_VALUES, board[newCell.first][newCell.second])
         }
     }
 }
