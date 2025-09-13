@@ -4,6 +4,7 @@ import org.junit.jupiter.api.Assertions.*
 import org.junit.jupiter.api.Nested
 import org.junit.jupiter.api.assertThrows
 import kotlin.test.Test
+import kotlin.test.assertContains
 
 class Board2048Test {
 
@@ -293,6 +294,39 @@ class Board2048Test {
 
                 assertModifiedBoard(targetCell, boardWithNewCell)
             }
+        }
+
+        @Test
+        fun `does not add random cell if move does not change the board`() {
+            val boardArray = arrayOf(
+                arrayOf(CellValue.V2, CellValue.V4),
+                arrayOf(CellValue.EMPTY, CellValue.EMPTY),
+            )
+            val board = Board2048(boardArray)
+
+            val newBoard = board.nextBoardAndCell(MoveDirection.LEFT)
+
+            assertEquals(board, newBoard)
+        }
+
+        @Test
+        fun `moves and adds random cell in combined call`() {
+            val boardArray = arrayOf(
+                arrayOf(CellValue.V2, CellValue.V2),
+                arrayOf(CellValue.EMPTY, CellValue.EMPTY),
+            )
+            val board = Board2048(boardArray)
+
+            val newBoard = board.nextBoardAndCell(MoveDirection.LEFT)
+
+            assertEquals(CellValue.V4, newBoard.getCellValue(0, 0))
+            val newCellValue = listOf(
+                newBoard.getCellValue(0, 1),
+                newBoard.getCellValue(1, 0),
+                newBoard.getCellValue(1, 1),
+            ).single { it != CellValue.EMPTY }
+
+            assertContains(Board2048.NEW_CELL_VALUES, newCellValue)
         }
     }
 }
