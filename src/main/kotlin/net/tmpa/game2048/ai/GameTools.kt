@@ -8,36 +8,15 @@ import org.slf4j.LoggerFactory
 class GameTools {
     private val logger = LoggerFactory.getLogger(GameTools::class.java)
 
-    @Tool("Move the 2048 game board to the left")
-    fun mergeLeft(board: AiBoardDto) = merge(board, MoveDirection.LEFT)
-
-    @Tool("Move the 2048 game board to the right")
-    fun mergeRight(board: AiBoardDto) = merge(board, MoveDirection.RIGHT)
-
-    @Tool("Move the 2048 game board up")
-    fun mergeUp(board: AiBoardDto) = merge(board, MoveDirection.UP)
-
-    @Tool("Move the 2048 game board down")
-    fun mergeDown(board: AiBoardDto) = merge(board, MoveDirection.DOWN)
-
-    @Tool("Evaluate if the 2048 game board is winning")
-    fun isWinning(board: AiBoardDto): Boolean {
-        val result = Board2048.createFromList(board.cells, board.size).isWinning()
-        logger.info("Tools call - evaluating if ${board.cells} is winning: $result")
+    @Tool("Merge a 2048 board by applying one or more move directions. " +
+            "Input: the current board state (list of cells and board size) and a list of move directions (UP, DOWN, LEFT, RIGHT). " +
+            "Output: the new board state after applying the moves.")
+    fun applyMoves(board: AiBoardDto, directions: Array<MoveDirection>): AiBoardDto {
+        val board = Board2048.createFromList(board.cells, board.size)
+        val directionList = directions.toList()
+        val reduced = board.nextBoard(directionList)
+        val result = AiBoardDto(reduced.asFlatList(), board.size)
+        logger.info("Tools call - merging $directionList on board: $board. Result: ${result.cells}")
         return result
     }
-
-    @Tool("Evaluate if the 2048 game board is losing")
-    fun isLosing(board: AiBoardDto): Boolean {
-        val result = Board2048.createFromList(board.cells, board.size).isLosing()
-        logger.info("Tools call - evaluating if ${board.cells} is losing: $result")
-        return result
-    }
-
-    private fun merge(board: AiBoardDto, direction: MoveDirection): AiBoardDto {
-        val result = AiBoardDto(Board2048.createFromList(board.cells, board.size).nextBoard(direction).asFlatList(), board.size)
-        logger.info("Tools call - merging $direction on board: $board. Result: ${result.cells}")
-        return result
-    }
-
 }

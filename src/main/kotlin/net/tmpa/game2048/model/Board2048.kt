@@ -73,6 +73,14 @@ class Board2048(board: List<List<CellValue>> = List(DEFAULT_SIZE) { List(DEFAULT
         }
     }
 
+    fun nextBoard(directions: List<MoveDirection>): Board2048 {
+        var current = this
+        for (direction in directions) {
+            current = current.nextBoard(direction)
+        }
+        return current
+    }
+
     fun addRandomCell(
         emptyCellPicker: (List<Pair<Int, Int>>) -> Pair<Int, Int> = { it.random() },
         valueGenerator: () -> CellValue = { NEW_CELL_VALUES.random() },
