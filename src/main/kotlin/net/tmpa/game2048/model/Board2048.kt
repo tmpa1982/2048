@@ -49,6 +49,9 @@ class Board2048(private val board: Array<Array<CellValue>> = Array(DEFAULT_SIZE)
     constructor(board: List<List<CellValue>>):
         this(Array(board.size) { r -> Array(board.size) { c -> board[r][c] } })
 
+    private constructor(size: Int) :
+        this(Array(size) { Array(size) { CellValue.EMPTY } })
+
     fun getCellValue(row: Int, col: Int): CellValue {
         return board[row][col]
     }
@@ -98,7 +101,7 @@ class Board2048(private val board: Array<Array<CellValue>> = Array(DEFAULT_SIZE)
     }
 
     private fun mergeLeft(): Board2048 {
-        val newBoard = Board2048()
+        val newBoard = Board2048(this.size)
         for (r in 0 until board.size) {
             val lane = EvaluationLane(board[r].toList())
             val evaluatedLane = lane.evaluate()
@@ -110,7 +113,7 @@ class Board2048(private val board: Array<Array<CellValue>> = Array(DEFAULT_SIZE)
     }
 
     private fun mergeRight(): Board2048 {
-        val newBoard = Board2048()
+        val newBoard = Board2048(this.size)
         for (r in 0 until board.size) {
             val lane = EvaluationLane(board[r].reversed())
             val evaluatedLane = lane.evaluate()
@@ -122,7 +125,7 @@ class Board2048(private val board: Array<Array<CellValue>> = Array(DEFAULT_SIZE)
     }
 
     private fun mergeUp(): Board2048 {
-        val newBoard = Board2048()
+        val newBoard = Board2048(this.size)
         for (c in 0 until board.size) {
             val lane = EvaluationLane(List(board.size) { r -> board[r][c] })
             val evaluatedLane = lane.evaluate()
@@ -134,7 +137,7 @@ class Board2048(private val board: Array<Array<CellValue>> = Array(DEFAULT_SIZE)
     }
 
     private fun mergeDown(): Board2048 {
-        val newBoard = Board2048()
+        val newBoard = Board2048(this.size)
         for (c in 0 until board.size) {
             val lane = EvaluationLane(List(board.size) { r -> board[board.size - 1 - r][c] })
             val evaluatedLane = lane.evaluate()

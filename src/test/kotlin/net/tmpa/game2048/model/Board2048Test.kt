@@ -3,6 +3,8 @@ package net.tmpa.game2048.model
 import org.junit.jupiter.api.Assertions.*
 import org.junit.jupiter.api.Nested
 import org.junit.jupiter.api.assertThrows
+import org.junit.jupiter.params.ParameterizedTest
+import org.junit.jupiter.params.provider.EnumSource
 import kotlin.test.Test
 import kotlin.test.assertContains
 
@@ -134,6 +136,19 @@ class Board2048Test {
                 )
             )
             assertEquals(expectedBoard, mergedBoard)
+        }
+
+        @ParameterizedTest
+        @EnumSource(MoveDirection::class)
+        fun `merging keeps board size unchanged`(direction: MoveDirection) {
+            val board = Board2048(
+                arrayOf(
+                    arrayOf(CellValue.V2, CellValue.V2),
+                    arrayOf(CellValue.EMPTY, CellValue.EMPTY),
+                )
+            )
+            val mergedBoard = board.nextBoard(direction)
+            assertEquals(board.size, mergedBoard.size)
         }
     }
 
