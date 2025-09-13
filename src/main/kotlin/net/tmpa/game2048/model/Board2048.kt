@@ -1,6 +1,13 @@
 package net.tmpa.game2048.model
 
-class Board2048(private val board: Array<Array<CellValue>> = Array(DEFAULT_SIZE) { Array(DEFAULT_SIZE) { CellValue.EMPTY } }) {
+class Board2048(board: List<List<CellValue>> = List(DEFAULT_SIZE) { List(DEFAULT_SIZE) { CellValue.EMPTY } }) {
+    private val board = Array(board.size) { r -> Array(board.size) { c -> board[r][c] } }
+
+    init {
+        require(board.size >= 2) { "Board size must be at least 2" }
+        require(board.all { it.size == board.size }) { "Board must be square" }
+    }
+
     companion object {
         const val DEFAULT_SIZE = 4
 
@@ -41,16 +48,13 @@ class Board2048(private val board: Array<Array<CellValue>> = Array(DEFAULT_SIZE)
 
         fun createFromList(cells: List<CellValue>, size: Int = DEFAULT_SIZE): Board2048 {
             require(cells.size == size * size) { "The number of cells must be equal to size*size" }
-            val boardArray = Array(size) { r -> Array(size) { c -> cells[r * size + c] } }
+            val boardArray = List(size) { r -> List(size) { c -> cells[r * size + c] } }
             return Board2048(boardArray)
         }
     }
 
-    constructor(board: List<List<CellValue>>):
-        this(Array(board.size) { r -> Array(board.size) { c -> board[r][c] } })
-
     private constructor(size: Int) :
-        this(Array(size) { Array(size) { CellValue.EMPTY } })
+        this(List(size) { List(size) { CellValue.EMPTY } })
 
     fun getCellValue(row: Int, col: Int): CellValue {
         return board[row][col]

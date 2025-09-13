@@ -43,22 +43,22 @@ class Board2048Test {
         @Test
         fun `merge left`() {
             val board = Board2048(
-                arrayOf(
-                    arrayOf(CellValue.EMPTY, CellValue.V2, CellValue.V4, CellValue.EMPTY),
-                    arrayOf(CellValue.EMPTY, CellValue.EMPTY, CellValue.V8, CellValue.V8),
-                    arrayOf(CellValue.V16, CellValue.V16, CellValue.EMPTY, CellValue.V16),
-                    arrayOf(CellValue.V2, CellValue.V4, CellValue.V8, CellValue.V16),
+                listOf(
+                    listOf(CellValue.EMPTY, CellValue.V2, CellValue.V4, CellValue.EMPTY),
+                    listOf(CellValue.EMPTY, CellValue.EMPTY, CellValue.V8, CellValue.V8),
+                    listOf(CellValue.V16, CellValue.V16, CellValue.EMPTY, CellValue.V16),
+                    listOf(CellValue.V2, CellValue.V4, CellValue.V8, CellValue.V16),
                 )
             )
 
             val mergedBoard = board.nextBoard(MoveDirection.LEFT)
 
             val expectedBoard = Board2048(
-                arrayOf(
-                    arrayOf(CellValue.V2, CellValue.V4, CellValue.EMPTY, CellValue.EMPTY),
-                    arrayOf(CellValue.V16, CellValue.EMPTY, CellValue.EMPTY, CellValue.EMPTY),
-                    arrayOf(CellValue.V32, CellValue.V16, CellValue.EMPTY, CellValue.EMPTY),
-                    arrayOf(CellValue.V2, CellValue.V4, CellValue.V8, CellValue.V16),
+                listOf(
+                    listOf(CellValue.V2, CellValue.V4, CellValue.EMPTY, CellValue.EMPTY),
+                    listOf(CellValue.V16, CellValue.EMPTY, CellValue.EMPTY, CellValue.EMPTY),
+                    listOf(CellValue.V32, CellValue.V16, CellValue.EMPTY, CellValue.EMPTY),
+                    listOf(CellValue.V2, CellValue.V4, CellValue.V8, CellValue.V16),
                 )
             )
 
@@ -68,22 +68,22 @@ class Board2048Test {
         @Test
         fun `merge right`() {
             val board = Board2048(
-                arrayOf(
-                    arrayOf(CellValue.EMPTY, CellValue.V2, CellValue.V4, CellValue.EMPTY),
-                    arrayOf(CellValue.EMPTY, CellValue.EMPTY, CellValue.V8, CellValue.V8),
-                    arrayOf(CellValue.V16, CellValue.V16, CellValue.EMPTY, CellValue.V16),
-                    arrayOf(CellValue.V2, CellValue.V4, CellValue.V8, CellValue.V16),
+                listOf(
+                    listOf(CellValue.EMPTY, CellValue.V2, CellValue.V4, CellValue.EMPTY),
+                    listOf(CellValue.EMPTY, CellValue.EMPTY, CellValue.V8, CellValue.V8),
+                    listOf(CellValue.V16, CellValue.V16, CellValue.EMPTY, CellValue.V16),
+                    listOf(CellValue.V2, CellValue.V4, CellValue.V8, CellValue.V16),
                 )
             )
 
             val mergedBoard = board.nextBoard(MoveDirection.RIGHT)
 
             val expectedBoard = Board2048(
-                arrayOf(
-                    arrayOf(CellValue.EMPTY, CellValue.EMPTY, CellValue.V2, CellValue.V4),
-                    arrayOf(CellValue.EMPTY, CellValue.EMPTY, CellValue.EMPTY, CellValue.V16),
-                    arrayOf(CellValue.EMPTY, CellValue.EMPTY, CellValue.V16, CellValue.V32),
-                    arrayOf(CellValue.V2, CellValue.V4, CellValue.V8, CellValue.V16),
+                listOf(
+                    listOf(CellValue.EMPTY, CellValue.EMPTY, CellValue.V2, CellValue.V4),
+                    listOf(CellValue.EMPTY, CellValue.EMPTY, CellValue.EMPTY, CellValue.V16),
+                    listOf(CellValue.EMPTY, CellValue.EMPTY, CellValue.V16, CellValue.V32),
+                    listOf(CellValue.V2, CellValue.V4, CellValue.V8, CellValue.V16),
                 )
             )
 
@@ -93,22 +93,22 @@ class Board2048Test {
         @Test
         fun `merge up`() {
             val board = Board2048(
-                arrayOf(
-                    arrayOf(CellValue.EMPTY, CellValue.V2, CellValue.V4, CellValue.EMPTY),
-                    arrayOf(CellValue.EMPTY, CellValue.EMPTY, CellValue.V8, CellValue.V8),
-                    arrayOf(CellValue.V16, CellValue.V16, CellValue.EMPTY, CellValue.V16),
-                    arrayOf(CellValue.V2, CellValue.V4, CellValue.V8, CellValue.V16),
+                listOf(
+                    listOf(CellValue.EMPTY, CellValue.V2, CellValue.V4, CellValue.EMPTY),
+                    listOf(CellValue.EMPTY, CellValue.EMPTY, CellValue.V8, CellValue.V8),
+                    listOf(CellValue.V16, CellValue.V16, CellValue.EMPTY, CellValue.V16),
+                    listOf(CellValue.V2, CellValue.V4, CellValue.V8, CellValue.V16),
                 )
             )
 
             val mergedBoard = board.nextBoard(MoveDirection.UP)
 
             val expectedBoard = Board2048(
-                arrayOf(
-                    arrayOf(CellValue.V16, CellValue.V2, CellValue.V4, CellValue.V8),
-                    arrayOf(CellValue.V2, CellValue.V16, CellValue.V16, CellValue.V32),
-                    arrayOf(CellValue.EMPTY, CellValue.V4, CellValue.EMPTY, CellValue.EMPTY),
-                    arrayOf(CellValue.EMPTY, CellValue.EMPTY, CellValue.EMPTY, CellValue.EMPTY),
+                listOf(
+                    listOf(CellValue.V16, CellValue.V2, CellValue.V4, CellValue.V8),
+                    listOf(CellValue.V2, CellValue.V16, CellValue.V16, CellValue.V32),
+                    listOf(CellValue.EMPTY, CellValue.V4, CellValue.EMPTY, CellValue.EMPTY),
+                    listOf(CellValue.EMPTY, CellValue.EMPTY, CellValue.EMPTY, CellValue.EMPTY),
                 )
             )
 
@@ -118,21 +118,21 @@ class Board2048Test {
         @Test
         fun `merge down`() {
             val board = Board2048(
-                arrayOf(
-                    arrayOf(CellValue.EMPTY, CellValue.V2, CellValue.V4, CellValue.EMPTY),
-                    arrayOf(CellValue.EMPTY, CellValue.EMPTY, CellValue.V8, CellValue.V8),
-                    arrayOf(CellValue.V16, CellValue.V16, CellValue.EMPTY, CellValue.V16),
-                    arrayOf(CellValue.V2, CellValue.V4, CellValue.V8, CellValue.V16),
+                listOf(
+                    listOf(CellValue.EMPTY, CellValue.V2, CellValue.V4, CellValue.EMPTY),
+                    listOf(CellValue.EMPTY, CellValue.EMPTY, CellValue.V8, CellValue.V8),
+                    listOf(CellValue.V16, CellValue.V16, CellValue.EMPTY, CellValue.V16),
+                    listOf(CellValue.V2, CellValue.V4, CellValue.V8, CellValue.V16),
                 )
             )
             val mergedBoard = board.nextBoard(MoveDirection.DOWN)
 
             val expectedBoard = Board2048(
-                arrayOf(
-                    arrayOf(CellValue.EMPTY, CellValue.EMPTY, CellValue.EMPTY, CellValue.EMPTY),
-                    arrayOf(CellValue.EMPTY, CellValue.V2, CellValue.EMPTY, CellValue.EMPTY),
-                    arrayOf(CellValue.V16, CellValue.V16, CellValue.V4, CellValue.V8),
-                    arrayOf(CellValue.V2, CellValue.V4, CellValue.V16, CellValue.V32),
+                listOf(
+                    listOf(CellValue.EMPTY, CellValue.EMPTY, CellValue.EMPTY, CellValue.EMPTY),
+                    listOf(CellValue.EMPTY, CellValue.V2, CellValue.EMPTY, CellValue.EMPTY),
+                    listOf(CellValue.V16, CellValue.V16, CellValue.V4, CellValue.V8),
+                    listOf(CellValue.V2, CellValue.V4, CellValue.V16, CellValue.V32),
                 )
             )
             assertEquals(expectedBoard, mergedBoard)
@@ -142,9 +142,9 @@ class Board2048Test {
         @EnumSource(MoveDirection::class)
         fun `merging keeps board size unchanged`(direction: MoveDirection) {
             val board = Board2048(
-                arrayOf(
-                    arrayOf(CellValue.V2, CellValue.V2),
-                    arrayOf(CellValue.EMPTY, CellValue.EMPTY),
+                listOf(
+                    listOf(CellValue.V2, CellValue.V2),
+                    listOf(CellValue.EMPTY, CellValue.EMPTY),
                 )
             )
             val mergedBoard = board.nextBoard(direction)
@@ -157,11 +157,11 @@ class Board2048Test {
         @Test
         fun `board is winning when it contains V2048 cell`() {
             val winningBoard = Board2048(
-                arrayOf(
-                    arrayOf(CellValue.V2, CellValue.V4, CellValue.V8, CellValue.V16),
-                    arrayOf(CellValue.V32, CellValue.V64, CellValue.V128, CellValue.V256),
-                    arrayOf(CellValue.V512, CellValue.V1024, CellValue.V2048, CellValue.EMPTY),
-                    arrayOf(CellValue.EMPTY, CellValue.EMPTY, CellValue.EMPTY, CellValue.EMPTY),
+                listOf(
+                    listOf(CellValue.V2, CellValue.V4, CellValue.V8, CellValue.V16),
+                    listOf(CellValue.V32, CellValue.V64, CellValue.V128, CellValue.V256),
+                    listOf(CellValue.V512, CellValue.V1024, CellValue.V2048, CellValue.EMPTY),
+                    listOf(CellValue.EMPTY, CellValue.EMPTY, CellValue.EMPTY, CellValue.EMPTY),
                 )
             )
             assertTrue(winningBoard.isWinning())
@@ -171,11 +171,11 @@ class Board2048Test {
         @Test
         fun `board is losing when no moves are possible`() {
             val losingBoard = Board2048(
-                arrayOf(
-                    arrayOf(CellValue.V2, CellValue.V4, CellValue.V2, CellValue.V4),
-                    arrayOf(CellValue.V4, CellValue.V2, CellValue.V4, CellValue.V2),
-                    arrayOf(CellValue.V2, CellValue.V4, CellValue.V2, CellValue.V4),
-                    arrayOf(CellValue.V4, CellValue.V2, CellValue.V4, CellValue.V2),
+                listOf(
+                    listOf(CellValue.V2, CellValue.V4, CellValue.V2, CellValue.V4),
+                    listOf(CellValue.V4, CellValue.V2, CellValue.V4, CellValue.V2),
+                    listOf(CellValue.V2, CellValue.V4, CellValue.V2, CellValue.V4),
+                    listOf(CellValue.V4, CellValue.V2, CellValue.V4, CellValue.V2),
                 )
             )
             assertTrue(losingBoard.isLosing())
@@ -184,11 +184,11 @@ class Board2048Test {
         @Test
         fun `board is not losing when two horizontal neighboring cells can be merged`() {
             val board = Board2048(
-                arrayOf(
-                    arrayOf(CellValue.V2, CellValue.V2, CellValue.V4, CellValue.V8),
-                    arrayOf(CellValue.V16, CellValue.V32, CellValue.V64, CellValue.V128),
-                    arrayOf(CellValue.V256, CellValue.V512, CellValue.V1024, CellValue.V2),
-                    arrayOf(CellValue.V4, CellValue.V8, CellValue.V16, CellValue.V32),
+                listOf(
+                    listOf(CellValue.V2, CellValue.V2, CellValue.V4, CellValue.V8),
+                    listOf(CellValue.V16, CellValue.V32, CellValue.V64, CellValue.V128),
+                    listOf(CellValue.V256, CellValue.V512, CellValue.V1024, CellValue.V2),
+                    listOf(CellValue.V4, CellValue.V8, CellValue.V16, CellValue.V32),
                 )
             )
             assertFalse(board.isLosing())
@@ -197,11 +197,11 @@ class Board2048Test {
         @Test
         fun `board is not losing when two vertical neighboring cells can be merged`() {
             val board = Board2048(
-                arrayOf(
-                    arrayOf(CellValue.V2, CellValue.V4, CellValue.V8, CellValue.V16),
-                    arrayOf(CellValue.V2, CellValue.V32, CellValue.V64, CellValue.V128),
-                    arrayOf(CellValue.V256, CellValue.V512, CellValue.V1024, CellValue.V2),
-                    arrayOf(CellValue.V4, CellValue.V8, CellValue.V16, CellValue.V32),
+                listOf(
+                    listOf(CellValue.V2, CellValue.V4, CellValue.V8, CellValue.V16),
+                    listOf(CellValue.V2, CellValue.V32, CellValue.V64, CellValue.V128),
+                    listOf(CellValue.V256, CellValue.V512, CellValue.V1024, CellValue.V2),
+                    listOf(CellValue.V4, CellValue.V8, CellValue.V16, CellValue.V32),
                 )
             )
             assertFalse(board.isLosing())
@@ -210,11 +210,11 @@ class Board2048Test {
         @Test
         fun `board is not losing when at least one cell is empty`() {
             val board = Board2048(
-                arrayOf(
-                    arrayOf(CellValue.EMPTY, CellValue.V4, CellValue.V2, CellValue.V4),
-                    arrayOf(CellValue.V4, CellValue.V2, CellValue.V4, CellValue.V2),
-                    arrayOf(CellValue.V2, CellValue.V4, CellValue.V2, CellValue.V4),
-                    arrayOf(CellValue.V4, CellValue.V2, CellValue.V4, CellValue.V2),
+                listOf(
+                    listOf(CellValue.EMPTY, CellValue.V4, CellValue.V2, CellValue.V4),
+                    listOf(CellValue.V4, CellValue.V2, CellValue.V4, CellValue.V2),
+                    listOf(CellValue.V2, CellValue.V4, CellValue.V2, CellValue.V4),
+                    listOf(CellValue.V4, CellValue.V2, CellValue.V4, CellValue.V2),
                 )
             )
             assertFalse(board.isLosing())
@@ -227,9 +227,9 @@ class Board2048Test {
         fun `board can be transformed from list`() {
             val flattenedList = listOf(CellValue.V2, CellValue.V4, CellValue.V8, CellValue.V16)
             val expected = Board2048(
-                arrayOf(
-                    arrayOf(CellValue.V2, CellValue.V4),
-                    arrayOf(CellValue.V8, CellValue.V16),
+                listOf(
+                    listOf(CellValue.V2, CellValue.V4),
+                    listOf(CellValue.V8, CellValue.V16),
                 )
             )
             val actual = Board2048.createFromList(flattenedList, 2)
@@ -259,11 +259,11 @@ class Board2048Test {
         @Test
         fun `returns the same board when trying to add a cell to a full board`() {
             val fullBoard = Board2048(
-                arrayOf(
-                    arrayOf(CellValue.V2, CellValue.V4, CellValue.V8, CellValue.V16),
-                    arrayOf(CellValue.V32, CellValue.V64, CellValue.V128, CellValue.V256),
-                    arrayOf(CellValue.V512, CellValue.V1024, CellValue.V2048, CellValue.V2),
-                    arrayOf(CellValue.V4, CellValue.V8, CellValue.V16, CellValue.V32),
+                listOf(
+                    listOf(CellValue.V2, CellValue.V4, CellValue.V8, CellValue.V16),
+                    listOf(CellValue.V32, CellValue.V64, CellValue.V128, CellValue.V256),
+                    listOf(CellValue.V512, CellValue.V1024, CellValue.V2048, CellValue.V2),
+                    listOf(CellValue.V4, CellValue.V8, CellValue.V16, CellValue.V32),
                 )
             )
 
@@ -272,11 +272,11 @@ class Board2048Test {
 
         @Test
         fun `adds a random cell to one of the empty positions`() {
-            val boardArray = arrayOf(
-                arrayOf(CellValue.V2, CellValue.EMPTY, CellValue.V4, CellValue.EMPTY),
-                arrayOf(CellValue.EMPTY, CellValue.V8, CellValue.EMPTY, CellValue.V16),
-                arrayOf(CellValue.V32, CellValue.EMPTY, CellValue.V64, CellValue.EMPTY),
-                arrayOf(CellValue.EMPTY, CellValue.V128, CellValue.EMPTY, CellValue.V256),
+            val boardArray = listOf(
+                listOf(CellValue.V2, CellValue.EMPTY, CellValue.V4, CellValue.EMPTY),
+                listOf(CellValue.EMPTY, CellValue.V8, CellValue.EMPTY, CellValue.V16),
+                listOf(CellValue.V32, CellValue.EMPTY, CellValue.V64, CellValue.EMPTY),
+                listOf(CellValue.EMPTY, CellValue.V128, CellValue.EMPTY, CellValue.V256),
             )
             val board = Board2048(boardArray)
 
@@ -313,9 +313,9 @@ class Board2048Test {
 
         @Test
         fun `does not add random cell if move does not change the board`() {
-            val boardArray = arrayOf(
-                arrayOf(CellValue.V2, CellValue.V4),
-                arrayOf(CellValue.EMPTY, CellValue.EMPTY),
+            val boardArray = listOf(
+                listOf(CellValue.V2, CellValue.V4),
+                listOf(CellValue.EMPTY, CellValue.EMPTY),
             )
             val board = Board2048(boardArray)
 
@@ -326,9 +326,9 @@ class Board2048Test {
 
         @Test
         fun `moves and adds random cell in combined call`() {
-            val boardArray = arrayOf(
-                arrayOf(CellValue.V2, CellValue.V2),
-                arrayOf(CellValue.EMPTY, CellValue.EMPTY),
+            val boardArray = listOf(
+                listOf(CellValue.V2, CellValue.V2),
+                listOf(CellValue.EMPTY, CellValue.EMPTY),
             )
             val board = Board2048(boardArray)
 
