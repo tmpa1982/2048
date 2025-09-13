@@ -33,6 +33,9 @@ Assuming the cells array is indexed from 0:
 - the bottom left of the board is index 12
 - the bottom right of the board is index 15
 
+To avoid mismatch from your internal representation of the board, use the provided tool to verify your recommendation
+reflects correctly when applied to the game board.
+
 ## Principles
 
 1. **Objective**  
