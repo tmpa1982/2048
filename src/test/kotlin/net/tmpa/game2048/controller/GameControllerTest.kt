@@ -6,14 +6,20 @@ import net.tmpa.game2048.dto.MoveResponse
 import net.tmpa.game2048.model.Board2048
 import net.tmpa.game2048.model.CellValue
 import net.tmpa.game2048.model.MoveDirection
+import net.tmpa.game2048.repository.GameRepository
 import org.junit.jupiter.api.Assertions.assertNotEquals
 import org.junit.jupiter.api.Test
+import org.springframework.beans.factory.annotation.Autowired
+import java.util.UUID
 import kotlin.test.assertContains
 import kotlin.test.assertEquals
 import kotlin.test.assertFalse
 import kotlin.test.fail
 
 class GameControllerIntegrationTest : IntegrationTestBase() {
+    @Autowired
+    private lateinit var repository: GameRepository
+
     @Test
     fun `let's play a game`() {
         val response = restTemplate.postForEntity("/api/game", null, CreateGameResponse::class.java)
@@ -21,18 +27,44 @@ class GameControllerIntegrationTest : IntegrationTestBase() {
         val initialBoard = response.body!!.board.cells
         assertInitialBoard(initialBoard)
 
-        val moveRequest = MoveRequest(MoveDirection.DOWN)
-        val moveResponse = restTemplate.postForEntity("/api/game/$gameId/move", moveRequest, MoveResponse::class.java)
-        val moveBody = moveResponse.body!!
-        assertFalse(moveBody.isLosing)
-        assertFalse(moveBody.isWinning)
-        val newBoardCells = moveBody.board.cells
+        val newBoardCells = move(gameId, MoveDirection.DOWN)
         assertBoardMovedDownExceptMaybeOne(newBoardCells)
 
         val initialBoardSum = initialBoard.flatten().sumOf { it.value }
         val newBoardSum = newBoardCells.flatten().sumOf { it.value }
         val difference = newBoardSum - initialBoardSum
         assertContains(Board2048.NEW_CELL_VALUES.map { it.value }, difference)
+    }
+
+    @Test
+    fun `does not add new random cell if move does not change the board`() {
+        val gameId = UUID.randomUUID().toString()
+        val board = Board2048(
+            listOf(
+                listOf(CellValue.EMPTY, CellValue.EMPTY, CellValue.EMPTY, CellValue.EMPTY),
+                listOf(CellValue.EMPTY, CellValue.EMPTY, CellValue.EMPTY, CellValue.EMPTY),
+                listOf(CellValue.V2, CellValue.EMPTY, CellValue.EMPTY, CellValue.EMPTY),
+                listOf(CellValue.V4, CellValue.V2, CellValue.EMPTY, CellValue.EMPTY),
+            )
+        )
+
+        repository.add(gameId, board)
+
+        val newBoardCells = move(gameId, MoveDirection.LEFT)
+        val countByValue = newBoardCells.flatten().groupBy { it }.map { it.key to it.value.size }.toMap()
+        assertEquals(1, countByValue[CellValue.V4])
+        assertEquals(2, countByValue[CellValue.V2])
+        assertEquals(board.size * board.size - 3, countByValue[CellValue.EMPTY])
+    }
+
+    private fun move(gameId: String, direction: MoveDirection): List<List<CellValue>> {
+        val moveRequest = MoveRequest(direction)
+        val moveResponse = restTemplate.postForEntity("/api/game/$gameId/move", moveRequest, MoveResponse::class.java)
+        val moveBody = moveResponse.body!!
+        assertFalse(moveBody.isLosing)
+        assertFalse(moveBody.isWinning)
+        val newBoardCells = moveBody.board.cells
+        return newBoardCells
     }
 
     private fun assertInitialBoard(board: List<List<CellValue>>) {

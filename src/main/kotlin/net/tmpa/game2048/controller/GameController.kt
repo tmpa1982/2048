@@ -29,7 +29,7 @@ class GameController(private val repository: GameRepository) {
     @PostMapping("/{id}/move")
     fun move(@PathVariable id: String, @RequestBody moveRequest: MoveRequest): MoveResponse {
         val board = repository.get(id) ?: throw ResponseStatusException(HttpStatus.NOT_FOUND, "Game not found")
-        val nextBoard = board.nextBoard(moveRequest.direction).addRandomCell()
+        val nextBoard = board.nextBoardAndCell(moveRequest.direction)
         repository.add(id, nextBoard)
         return MoveResponse(nextBoard.isWinning(), nextBoard.isLosing(), BoardDto(nextBoard.asList()))
     }
