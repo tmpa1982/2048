@@ -4,6 +4,7 @@ import net.tmpa.game2048.ai.AiServiceFactory
 import net.tmpa.game2048.ai.GameEvaluator
 import net.tmpa.game2048.config.TestConfig
 import org.junit.jupiter.api.BeforeEach
+import org.mockito.ArgumentMatchers.anyString
 import org.mockito.Mockito.mock
 import org.mockito.kotlin.whenever
 import org.springframework.beans.factory.annotation.Autowired
@@ -26,6 +27,6 @@ abstract class IntegrationTestBase {
 
     @BeforeEach
     fun setup() {
-        whenever(aiServiceFactory.createService()).thenReturn(gameEvaluator)
+        whenever(aiServiceFactory.createService(anyString())).thenReturn(gameEvaluator)
     }
 }

@@ -10,15 +10,18 @@ import org.springframework.stereotype.Service
 @Service
 class AiServiceFactory(
     @Value($$"${azure.openai.endpoint}") private val endpoint: String,
+    @Value($$"${azure.aifoundry.endpoint}") private val foundryEndpoint: String,
 ) {
     private val tools = GameTools()
 
-    fun createService(): GameEvaluator {
+    fun createService(deploymentName: String): GameEvaluator {
+        fun selectEndpoint() = if (deploymentName == "gpt-5-chat") foundryEndpoint else endpoint
+
         val credential = DefaultAzureCredentialBuilder().build()
 
         val model = AzureOpenAiChatModel.builder()
-            .endpoint(endpoint)
-            .deploymentName("gpt-4o-mini")
+            .endpoint(selectEndpoint())
+            .deploymentName(deploymentName)
             .tokenCredential(credential)
             .responseFormat(ResponseFormat.JSON)
             .build()

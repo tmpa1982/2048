@@ -18,7 +18,7 @@ class EvaluationController(private val evaluator: NextMoveEvaluatorService) {
 
     @PostMapping
     fun evaluateBoard(@RequestBody request: EvaluationRequest): EvaluationResponse {
-        logger.info("Evaluating board: ${request.board}")
+        logger.info("Evaluating board ${request.board} with ${request.model}")
         if (!request.isValid()) {
             throw ResponseStatusException(HttpStatus.BAD_REQUEST, "Invalid board")
         }
