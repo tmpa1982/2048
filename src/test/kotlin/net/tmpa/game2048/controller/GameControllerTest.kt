@@ -32,7 +32,7 @@ class GameControllerIntegrationTest : IntegrationTestBase() {
         val initialBoardSum = initialBoard.flatten().sumOf { it.value }
         val newBoardSum = newBoardCells.flatten().sumOf { it.value }
         val difference = newBoardSum - initialBoardSum
-        assertContains(listOf(2, 4), difference)
+        assertContains(Board2048.NEW_CELL_VALUES.map { it.value }, difference)
     }
 
     private fun assertInitialBoard(board: List<List<CellValue>>) {
