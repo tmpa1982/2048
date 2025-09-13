@@ -14,6 +14,7 @@ interface GameEvaluator {
         - Do not propose moves based on boards you have already modified.
         - Explain why you chose the move in your reasoning.
         - Respond in JSON format like: {"bestMove": "UP", "reasoning": "reason why you think this is the best move"}.
+        - If no move is possible, return {"bestMove": null, "reasoning": "no moves possible"}.
     """)
     fun evaluate(@UserMessage board: AiBoardDto): MoveEvaluation
 }
