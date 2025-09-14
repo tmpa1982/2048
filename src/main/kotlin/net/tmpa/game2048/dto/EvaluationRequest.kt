@@ -5,7 +5,7 @@ import net.tmpa.game2048.model.CellValue
 
 class EvaluationRequest(
     val board: List<List<CellValue>>,
-    val model: String = "gpt-5-chat",
+    val model: String = "o4-mini",
 ) {
     @JsonIgnore
     fun isValid(): Boolean {
