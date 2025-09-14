@@ -65,4 +65,14 @@ tasks.jacocoTestReport {
         html.required.set(true)  // nice local report
         csv.required.set(false)
     }
+
+    classDirectories.setFrom(
+        files(classDirectories.files.map {
+            fileTree(it) {
+                exclude(
+                    "net/tmpa/game2048/ai/AiServiceFactory.class",
+                )
+            }
+        })
+    )
 }
