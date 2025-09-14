@@ -4,11 +4,26 @@
 
 Ensure **Java 21** is installed. All other dependencies is per codebase.
 
+## Deployment
+
+- Swagger: https://2048-fecwgmdehaf5dyca.eastasia-01.azurewebsites.net/swagger-ui/index.html
+- Azure App Service Plan with F1 (Free) SKU in East Asia region
+
+### User Interface
+
+For easier visualization
+
+- UI deployment: https://tmpa2048.azurewebsites.net/
+- UI code repository: http://github.com/tmpa1982/2048-ui
+
 ## AI Integration
 
-Requires Azure OpenAI service with EntraID authentication.
+Requires Azure OpenAI / AI Foundry service with EntraID authentication.
 
-Replace the endpoint to your own in `application.properties`.
+- Foundry endpoint for GPT-5 deployment (East US 2)
+- OpenAI endpoint for other GPT-4x deployments (East US)
+
+Replace the endpoints to your own in `application.properties`.
 
 Application can run without this, but obviously AI evaluation won't work.
 
