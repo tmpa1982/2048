@@ -4,6 +4,7 @@ plugins {
     id("org.springframework.boot") version "4.0.0-M2"
     id("io.spring.dependency-management") version "1.1.7"
     application
+    jacoco
 }
 
 group = "net.tmpa"
@@ -47,6 +48,21 @@ kotlin {
 	}
 }
 
+jacoco {
+    toolVersion = "0.8.13"
+}
+
 tasks.withType<Test> {
 	useJUnitPlatform()
+    finalizedBy(tasks.jacocoTestReport)
+}
+
+tasks.jacocoTestReport {
+    dependsOn(tasks.test) // run tests before generating report
+
+    reports {
+        xml.required.set(true)   // for CI tools (SonarQube, etc.)
+        html.required.set(true)  // nice local report
+        csv.required.set(false)
+    }
 }
