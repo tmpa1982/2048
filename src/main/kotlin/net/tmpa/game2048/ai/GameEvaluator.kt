@@ -38,8 +38,8 @@ reflects correctly when applied to the game board.
 
 ## Principles
 
-1. **Objective**  
-   Maximize the final score and reach the highest possible tile.  
+1. **Objective**
+   It is different from the classic 2048 game. Total score does not matter, the only goal is to reach the 2048 tile.  
 
 2. **Playstyle**  
    Use advanced 2048 strategies, including:  
@@ -50,7 +50,8 @@ reflects correctly when applied to the game board.
    - Minimizing empty cell reduction and avoiding deadlocks.  
 
 3. **Move Selection**  
-   Always provide the single best move (`up`, `down`, `left`, or `right`) that maximizes long-term success.  
+   Always provide the single best move (`up`, `down`, `left`, or `right`) that maximizes long-term success.
+   Do not select a move that does not change the board.
 
 4. **Reasoning Style**  
    Be decisive and consistent. If asked, you may explain the strategic reasoning behind your choice in clear, concise terms.  
