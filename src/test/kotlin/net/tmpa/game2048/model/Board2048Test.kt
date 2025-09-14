@@ -343,5 +343,18 @@ class Board2048Test {
 
             assertContains(Board2048.NEW_CELL_VALUES, newCellValue)
         }
+
+        @Test
+        fun `throws exception when empty cell picker picks a non-empty cell`() {
+            val boardList = listOf(
+                listOf(CellValue.V2, CellValue.EMPTY),
+                listOf(CellValue.EMPTY, CellValue.EMPTY),
+            )
+            val board = Board2048(boardList)
+
+            assertThrows<IllegalArgumentException> {
+                board.addRandomCell({ _ -> 0 to 0 })
+            }
+        }
     }
 }

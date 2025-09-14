@@ -99,6 +99,7 @@ class Board2048(board: List<List<CellValue>> = List(DEFAULT_SIZE) { List(DEFAULT
         }
 
         val (r, c) = emptyCellPicker(emptyCells)
+        require(board[r][c] == CellValue.EMPTY)
         val newBoard = Board2048(this.board.map { it.toList() })
         newBoard.setCellValue(r, c, valueGenerator())
         return newBoard
