@@ -6,6 +6,10 @@ Ensure **Java 21** is installed. All other dependencies is per codebase.
 
 ## Deployment
 
+> **Azure AI budget limit**
+>
+> To control PAYG cost, an automation account will remove the deployed AI models if the budget exceeds a preconfigured limit.
+
 - Swagger: https://2048-fecwgmdehaf5dyca.eastasia-01.azurewebsites.net/swagger-ui/index.html
 - Azure App Service Plan with F1 (Free) SKU in East Asia region
 
