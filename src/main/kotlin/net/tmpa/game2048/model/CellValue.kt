@@ -31,21 +31,4 @@ enum class CellValue(val value: Int) {
             V2048 -> throw IllegalStateException("No next value for V2048")
         }
     }
-
-    fun getNumericValue(): Int {
-        return when (this) {
-            EMPTY -> 0
-            V2 -> 2
-            V4 -> 4
-            V8 -> 8
-            V16 -> 16
-            V32 -> 32
-            V64 -> 64
-            V128 -> 128
-            V256 -> 256
-            V512 -> 512
-            V1024 -> 1024
-            V2048 -> 2048
-        }
-    }
 }
