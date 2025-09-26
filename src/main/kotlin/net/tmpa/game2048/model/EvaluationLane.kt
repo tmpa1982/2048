@@ -2,6 +2,14 @@ package net.tmpa.game2048.model
 
 data class EvaluationLane(val cells: List<CellValue>) {
     fun evaluate() : EvaluationLane {
+        for (i in cells.indices) {
+            if (cells[i] == CellValue.OBSTACLE) {
+                val leftLane = EvaluationLane(cells.subList(0, i)).evaluate()
+                val rightLane = EvaluationLane(cells.subList(i + 1, cells.size)).evaluate()
+                return EvaluationLane(leftLane.cells + listOf(CellValue.OBSTACLE) + rightLane.cells)
+            }
+        }
+
         val nonEmptyCells = cells.filter { it != CellValue.EMPTY }
         if (nonEmptyCells.isEmpty()) return EvaluationLane(List(cells.size) { CellValue.EMPTY })
 

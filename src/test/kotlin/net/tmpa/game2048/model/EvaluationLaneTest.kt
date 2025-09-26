@@ -88,4 +88,39 @@ class EvaluationLaneTest {
             assertEquals(expectedLane, evaluatedLane)
         }
     }
+
+    @Nested
+    inner class ObstacleMerges {
+        @Test
+        fun `lane with obstacle and identical values before and after obstacle merges correctly`() {
+            val lane = EvaluationLane(listOf(CellValue.V2, CellValue.V2, CellValue.OBSTACLE, CellValue.V2, CellValue.V2))
+            val expectedLane = EvaluationLane(listOf(CellValue.V4, CellValue.EMPTY, CellValue.OBSTACLE, CellValue.V4, CellValue.EMPTY))
+            val evaluatedLane = lane.evaluate()
+            assertEquals(expectedLane, evaluatedLane)
+        }
+
+        @Test
+        fun `lane with obstacle and non-identical values before and after obstacle does not merge`() {
+            val lane = EvaluationLane(listOf(CellValue.V2, CellValue.V4, CellValue.OBSTACLE, CellValue.V2, CellValue.V4))
+            val expectedLane = EvaluationLane(listOf(CellValue.V2, CellValue.V4, CellValue.OBSTACLE, CellValue.V2, CellValue.V4))
+            val evaluatedLane = lane.evaluate()
+            assertEquals(expectedLane, evaluatedLane)
+        }
+
+        @Test
+        fun `lane with obstacle at the beginning of the lane merges correctly`() {
+            val lane = EvaluationLane(listOf(CellValue.OBSTACLE, CellValue.V2, CellValue.V2, CellValue.V4))
+            val expectedLane = EvaluationLane(listOf(CellValue.OBSTACLE, CellValue.V4, CellValue.V4, CellValue.EMPTY))
+            val evaluatedLane = lane.evaluate()
+            assertEquals(expectedLane, evaluatedLane)
+        }
+
+        @Test
+        fun `lane with obstacle at the end of the lane merges correctly`() {
+            val lane = EvaluationLane(listOf(CellValue.V2, CellValue.V2, CellValue.V4, CellValue.OBSTACLE))
+            val expectedLane = EvaluationLane(listOf(CellValue.V4, CellValue.V4, CellValue.EMPTY, CellValue.OBSTACLE))
+            val evaluatedLane = lane.evaluate()
+            assertEquals(expectedLane, evaluatedLane)
+        }
+    }
 }
