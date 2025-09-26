@@ -9,7 +9,7 @@ class CellValueTest {
     fun `test enum values`() {
         var expectedCellValue = CellValue.EMPTY
         var expectedNumeric = 0
-        for (cellValue in CellValue.entries) {
+        for (cellValue in CellValue.entries.filter { it != CellValue.OBSTACLE }) {
             assertEquals(expectedCellValue, cellValue)
             assertEquals(expectedNumeric, cellValue.value)
             if (cellValue != CellValue.V2048) {
@@ -22,5 +22,10 @@ class CellValueTest {
     @Test
     fun `next value on 2048 throws exception`() {
         assertThrows<IllegalStateException> { CellValue.V2048.getNext() }
+    }
+
+    @Test
+    fun `next value on obstacle throws exception`() {
+        assertThrows<IllegalStateException> { CellValue.OBSTACLE.getNext() }
     }
 }
