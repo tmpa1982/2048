@@ -13,6 +13,7 @@ enum class CellValue(val value: Int) {
     V512(512),
     V1024(1024),
     V2048(2048),
+    OBSTACLE(-1),
     ;
 
     fun getNext(): CellValue {
@@ -29,6 +30,7 @@ enum class CellValue(val value: Int) {
             V512 -> V1024
             V1024 -> V2048
             V2048 -> throw IllegalStateException("No next value for V2048")
+            OBSTACLE -> throw IllegalStateException("No next value for OBSTACLE")
         }
     }
 }
