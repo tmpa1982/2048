@@ -13,11 +13,17 @@ class Board2048(board: List<List<CellValue>> = List(DEFAULT_SIZE) { List(DEFAULT
 
         val NEW_CELL_VALUES = listOf(CellValue.V2, CellValue.V4)
 
-        fun initializeRandomBoard() : Board2048 {
+        fun initializeRandomBoard(withObstacle: Boolean = false) : Board2048 {
             val board = Board2048()
             val availableCells = List(DEFAULT_SIZE * DEFAULT_SIZE) { i -> Pair(i / DEFAULT_SIZE, i % DEFAULT_SIZE) }
                 .toMutableList()
-            val numberOfNonEmptyCells = (2..DEFAULT_SIZE).random()
+            val minimumNonEmptyCells = if (withObstacle) 3 else 2
+            val numberOfNonEmptyCells = (minimumNonEmptyCells..DEFAULT_SIZE).random()
+            if (withObstacle) {
+                val obstacleCell = availableCells.random()
+                availableCells.remove(obstacleCell)
+                board.setCellValue(obstacleCell.first, obstacleCell.second, CellValue.OBSTACLE)
+            }
             repeat(numberOfNonEmptyCells) {
                 val (r, c) = availableCells.random()
                 availableCells.remove(Pair(r, c))

@@ -36,6 +36,26 @@ class Board2048Test {
             }
             assertTrue(v2Count >= 2, "Board should have at least two cells with value 2")
         }
+
+        @Test
+        fun `initializes board with obstacle`() {
+            val board = Board2048.initializeRandomBoard(withObstacle = true)
+            var v2Count = 0
+            var hasObstacle = false
+            for (r in 0 until Board2048.DEFAULT_SIZE) {
+                for (c in 0 until Board2048.DEFAULT_SIZE) {
+                    val cellValue = board.getCellValue(r, c)
+                    if (cellValue == CellValue.V2) {
+                        v2Count++
+                    }
+                    if (cellValue == CellValue.OBSTACLE) {
+                        hasObstacle = true
+                    }
+                }
+            }
+            assertTrue(v2Count >= 2, "Board should have at least two cells with value 2")
+            assertTrue(hasObstacle, "Board should have an obstacle cell")
+        }
     }
 
     @Nested
