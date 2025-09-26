@@ -13,37 +13,17 @@ class Board2048(board: List<List<CellValue>> = List(DEFAULT_SIZE) { List(DEFAULT
 
         val NEW_CELL_VALUES = listOf(CellValue.V2, CellValue.V4)
 
-        private val allowedInitialValues = listOf(CellValue.EMPTY, CellValue.V2)
-
-        fun initializeRandomBoard(valueGenerator: () -> CellValue = { allowedInitialValues.random() }) : Board2048 {
+        fun initializeRandomBoard() : Board2048 {
             val board = Board2048()
-            var nonEmptyCount = 0
-            for (r in 0 until DEFAULT_SIZE) {
-                for (c in 0 until DEFAULT_SIZE) {
-                    val value = valueGenerator()
-                    board.setCellValue(r, c, value)
-                    if (value != CellValue.EMPTY) {
-                        nonEmptyCount++
-                    }
-                }
-            }
-
-            if (nonEmptyCount < 2) {
-                ensureTwoNonEmptyCells(board)
+            val availableCells = List(DEFAULT_SIZE * DEFAULT_SIZE) { i -> Pair(i / DEFAULT_SIZE, i % DEFAULT_SIZE) }
+                .toMutableList()
+            val numberOfNonEmptyCells = (2..DEFAULT_SIZE).random()
+            repeat(numberOfNonEmptyCells) {
+                val (r, c) = availableCells.random()
+                availableCells.remove(Pair(r, c))
+                board.setCellValue(r, c, CellValue.V2)
             }
             return board
-        }
-
-        private fun ensureTwoNonEmptyCells(board: Board2048) {
-            var placed = 0
-            while (placed < 2) {
-                val r = (0 until DEFAULT_SIZE).random()
-                val c = (0 until DEFAULT_SIZE).random()
-                if (board.getCellValue(r, c) == CellValue.EMPTY) {
-                    board.setCellValue(r, c, CellValue.V2)
-                    placed++
-                }
-            }
         }
 
         fun createFromList(cells: List<CellValue>, size: Int = DEFAULT_SIZE): Board2048 {

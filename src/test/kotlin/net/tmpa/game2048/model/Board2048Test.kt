@@ -25,7 +25,7 @@ class Board2048Test {
 
         @Test
         fun `initialized board has at least two V2 cells`() {
-            val board = Board2048.initializeRandomBoard { CellValue.EMPTY }
+            val board = Board2048.initializeRandomBoard()
             var v2Count = 0
             for (r in 0 until Board2048.DEFAULT_SIZE) {
                 for (c in 0 until Board2048.DEFAULT_SIZE) {
