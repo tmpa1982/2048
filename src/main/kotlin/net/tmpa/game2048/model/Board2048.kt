@@ -184,13 +184,17 @@ class Board2048(board: List<List<CellValue>> = List(DEFAULT_SIZE) { List(DEFAULT
     fun isLosing(): Boolean {
         for (r in 0 until board.size) {
             for (c in 0 until board.size) {
-                if (getCellValue(r, c) == CellValue.EMPTY) {
+                val cellValue = getCellValue(r, c)
+                if (cellValue == CellValue.EMPTY) {
                     return false
                 }
-                if (c < board.size - 1 && getCellValue(r, c) == getCellValue(r, c + 1)) {
+                if (cellValue == CellValue.V2048) {
                     return false
                 }
-                if (r < board.size - 1 && getCellValue(r, c) == getCellValue(r + 1, c)) {
+                if (c < board.size - 1 && cellValue == getCellValue(r, c + 1)) {
+                    return false
+                }
+                if (r < board.size - 1 && cellValue == getCellValue(r + 1, c)) {
                     return false
                 }
             }

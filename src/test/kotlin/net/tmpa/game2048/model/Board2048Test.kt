@@ -219,6 +219,20 @@ class Board2048Test {
             )
             assertFalse(board.isLosing())
         }
+
+        @Test
+        fun `board is not losing when there is a 2048 cell and no moves are possible`() {
+            val board = Board2048(
+                listOf(
+                    listOf(CellValue.V2, CellValue.V4, CellValue.V2, CellValue.V4),
+                    listOf(CellValue.V4, CellValue.V2, CellValue.V4, CellValue.V2),
+                    listOf(CellValue.V2, CellValue.V4, CellValue.V2048, CellValue.V4),
+                    listOf(CellValue.V4, CellValue.V2, CellValue.V4, CellValue.V2),
+                )
+            )
+            assertFalse(board.isLosing())
+            assertTrue(board.isWinning())
+        }
     }
 
     @Nested
