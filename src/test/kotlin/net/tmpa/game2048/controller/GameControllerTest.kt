@@ -22,7 +22,7 @@ class GameControllerIntegrationTest : IntegrationTestBase() {
 
     @Test
     fun `let's play a game`() {
-        val response = restTemplate.postForEntity("/api/game", null, CreateGameResponse::class.java)
+        val response = restTemplate.postForEntity("/api/game", CreateGameRequest(), CreateGameResponse::class.java)
         val gameId = response.body!!.id
         val initialBoard = response.body!!.board.cells
         assertInitialBoard(initialBoard)

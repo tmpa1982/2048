@@ -1,6 +1,7 @@
 package net.tmpa.game2048.controller
 
 import net.tmpa.game2048.dto.BoardDto
+import net.tmpa.game2048.dto.CreateGameRequest
 import net.tmpa.game2048.dto.CreateGameResponse
 import net.tmpa.game2048.dto.MoveRequest
 import net.tmpa.game2048.dto.MoveResponse
@@ -19,9 +20,9 @@ import java.util.UUID
 @RequestMapping("/api/game")
 class GameController(private val repository: GameRepository) {
     @PostMapping
-    fun createGame(): CreateGameResponse {
+    fun createGame(@RequestBody createGameRequest: CreateGameRequest): CreateGameResponse {
         val id = UUID.randomUUID().toString()
-        val board = Board2048.initializeRandomBoard()
+        val board = Board2048.initializeRandomBoard(withObstacle = createGameRequest.withObstacle)
         repository.add(id, board)
         return CreateGameResponse(id, BoardDto(board.asList()))
     }
