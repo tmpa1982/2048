@@ -68,7 +68,8 @@ class Board2048Test {
                     listOf(CellValue.EMPTY, CellValue.EMPTY, CellValue.V8, CellValue.V8),
                     listOf(CellValue.V16, CellValue.V16, CellValue.EMPTY, CellValue.V16),
                     listOf(CellValue.V2, CellValue.V4, CellValue.V8, CellValue.V16),
-                )
+                ),
+                score = 128,
             )
 
             val mergedBoard = board.nextBoard(MoveDirection.LEFT)
@@ -83,6 +84,7 @@ class Board2048Test {
             )
 
             assertEquals(expectedBoard, mergedBoard)
+            assertEquals(128 + 16 + 32, mergedBoard.score)
         }
 
         @Test
@@ -93,7 +95,8 @@ class Board2048Test {
                     listOf(CellValue.EMPTY, CellValue.EMPTY, CellValue.V8, CellValue.V8),
                     listOf(CellValue.V16, CellValue.V16, CellValue.EMPTY, CellValue.V16),
                     listOf(CellValue.V2, CellValue.V4, CellValue.V8, CellValue.V16),
-                )
+                ),
+                score = 128,
             )
 
             val mergedBoard = board.nextBoard(MoveDirection.RIGHT)
@@ -108,6 +111,7 @@ class Board2048Test {
             )
 
             assertEquals(expectedBoard, mergedBoard)
+            assertEquals(128 + 16 + 32, mergedBoard.score)
         }
 
         @Test
@@ -118,7 +122,8 @@ class Board2048Test {
                     listOf(CellValue.EMPTY, CellValue.EMPTY, CellValue.V8, CellValue.V8),
                     listOf(CellValue.V16, CellValue.V16, CellValue.EMPTY, CellValue.V16),
                     listOf(CellValue.V2, CellValue.V4, CellValue.V8, CellValue.V16),
-                )
+                ),
+                score = 128,
             )
 
             val mergedBoard = board.nextBoard(MoveDirection.UP)
@@ -133,6 +138,7 @@ class Board2048Test {
             )
 
             assertEquals(expectedBoard, mergedBoard)
+            assertEquals(128 + 16 + 32, mergedBoard.score)
         }
 
         @Test
@@ -143,7 +149,8 @@ class Board2048Test {
                     listOf(CellValue.EMPTY, CellValue.EMPTY, CellValue.V8, CellValue.V8),
                     listOf(CellValue.V16, CellValue.V16, CellValue.EMPTY, CellValue.V16),
                     listOf(CellValue.V2, CellValue.V4, CellValue.V8, CellValue.V16),
-                )
+                ),
+                score = 128,
             )
             val mergedBoard = board.nextBoard(MoveDirection.DOWN)
 
@@ -156,6 +163,7 @@ class Board2048Test {
                 )
             )
             assertEquals(expectedBoard, mergedBoard)
+            assertEquals(128 + 16 + 32, mergedBoard.score)
         }
 
         @ParameterizedTest

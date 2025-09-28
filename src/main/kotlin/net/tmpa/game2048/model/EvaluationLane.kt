@@ -1,40 +1,53 @@
 package net.tmpa.game2048.model
 
+data class EvaluationLaneResult(private val lane: EvaluationLane, val scoreDelta: Int = 0) {
+    val cells = lane.cells
+}
+
 data class EvaluationLane(val cells: List<CellValue>) {
-    fun evaluate() : EvaluationLane {
+    private class NewCellResult(val newCells: List<CellValue>, val scoreDelta: Int)
+
+    fun evaluate(): EvaluationLaneResult {
         for (i in cells.indices) {
             if (cells[i] == CellValue.OBSTACLE) {
-                val leftLane = EvaluationLane(cells.subList(0, i)).evaluate()
-                val rightLane = EvaluationLane(cells.subList(i + 1, cells.size)).evaluate()
-                return EvaluationLane(leftLane.cells + listOf(CellValue.OBSTACLE) + rightLane.cells)
+                val leftResult = EvaluationLane(cells.subList(0, i)).evaluate()
+                val rightResult = EvaluationLane(cells.subList(i + 1, cells.size)).evaluate()
+
+                val lane = EvaluationLane(leftResult.cells + listOf(CellValue.OBSTACLE) + rightResult.cells)
+                val score = leftResult.scoreDelta + rightResult.scoreDelta
+                return EvaluationLaneResult(lane, score)
             }
         }
 
         val nonEmptyCells = cells.filter { it != CellValue.EMPTY }
-        if (nonEmptyCells.isEmpty()) return EvaluationLane(List(cells.size) { CellValue.EMPTY })
+        if (nonEmptyCells.isEmpty()) return EvaluationLaneResult(EvaluationLane(List(cells.size) { CellValue.EMPTY }), 0)
 
         if (nonEmptyCells.size == 1) {
-            return padWithEmpties(listOf(nonEmptyCells[0]))
+            return EvaluationLaneResult(padWithEmpties(listOf(nonEmptyCells[0])), 0)
         }
 
-        val newCells = evaluateNewCells(nonEmptyCells)
+        val evalResult = evaluateNewCells(nonEmptyCells)
+        val newCells = evalResult.newCells
 
         if (newCells.size == cells.size) {
-            return this
+            return EvaluationLaneResult(this, 0)
         }
 
-        return padWithEmpties(newCells)
+        return EvaluationLaneResult(padWithEmpties(newCells), evalResult.scoreDelta)
     }
 
-    private fun evaluateNewCells(nonEmptyCells: List<CellValue>): MutableList<CellValue> {
+    private fun evaluateNewCells(nonEmptyCells: List<CellValue>): NewCellResult {
         val newCells = mutableListOf<CellValue>()
+        var score = 0
         var previousCell: CellValue? = null
         for (cell in nonEmptyCells) {
             if (previousCell == null) {
                 previousCell = cell
             } else {
                 if (previousCell == cell) {
-                    newCells.add(previousCell.getNext())
+                    val next = previousCell.getNext()
+                    newCells.add(next)
+                    score += next.value
                     previousCell = null
                 } else {
                     newCells.add(previousCell)
@@ -45,7 +58,7 @@ data class EvaluationLane(val cells: List<CellValue>) {
         if (previousCell != null) {
             newCells.add(previousCell)
         }
-        return newCells
+        return NewCellResult(newCells, score)
     }
 
     private fun padWithEmpties(newCells: List<CellValue>): EvaluationLane {

@@ -1,7 +1,13 @@
 package net.tmpa.game2048.model
 
-class Board2048(board: List<List<CellValue>> = List(DEFAULT_SIZE) { List(DEFAULT_SIZE) { CellValue.EMPTY } }) {
+class Board2048(
+    board: List<List<CellValue>> = List(DEFAULT_SIZE) { List(DEFAULT_SIZE) { CellValue.EMPTY } },
+    score: Int = 0,
+) {
     private val board = Array(board.size) { r -> Array(board.size) { c -> board[r][c] } }
+
+    var score: Int = score
+        private set
 
     init {
         require(board.size >= 2) { "Board size must be at least 2" }
@@ -101,49 +107,61 @@ class Board2048(board: List<List<CellValue>> = List(DEFAULT_SIZE) { List(DEFAULT
 
     private fun mergeLeft(): Board2048 {
         val newBoard = Board2048(this.size)
+        var scoreDelta = 0
         for (r in 0 until board.size) {
             val lane = EvaluationLane(board[r].toList())
-            val evaluatedLane = lane.evaluate()
+            val result = lane.evaluate()
+            scoreDelta += result.scoreDelta
             for (c in 0 until board.size) {
-                newBoard.setCellValue(r, c, evaluatedLane.cells[c])
+                newBoard.setCellValue(r, c, result.cells[c])
             }
         }
+        newBoard.score = this.score + scoreDelta
         return newBoard
     }
 
     private fun mergeRight(): Board2048 {
         val newBoard = Board2048(this.size)
+        var scoreDelta = 0
         for (r in 0 until board.size) {
             val lane = EvaluationLane(board[r].reversed())
-            val evaluatedLane = lane.evaluate()
+            val result = lane.evaluate()
+            scoreDelta += result.scoreDelta
             for (c in 0 until board.size) {
-                newBoard.setCellValue(r, board.size - 1 - c, evaluatedLane.cells[c])
+                newBoard.setCellValue(r, board.size - 1 - c, result.cells[c])
             }
         }
+        newBoard.score = this.score + scoreDelta
         return newBoard
     }
 
     private fun mergeUp(): Board2048 {
         val newBoard = Board2048(this.size)
+        var scoreDelta = 0
         for (c in 0 until board.size) {
             val lane = EvaluationLane(List(board.size) { r -> board[r][c] })
-            val evaluatedLane = lane.evaluate()
+            val result = lane.evaluate()
+            scoreDelta += result.scoreDelta
             for (r in 0 until board.size) {
-                newBoard.setCellValue(r, c, evaluatedLane.cells[r])
+                newBoard.setCellValue(r, c, result.cells[r])
             }
         }
+        newBoard.score = this.score + scoreDelta
         return newBoard
     }
 
     private fun mergeDown(): Board2048 {
         val newBoard = Board2048(this.size)
+        var scoreDelta = 0
         for (c in 0 until board.size) {
             val lane = EvaluationLane(List(board.size) { r -> board[board.size - 1 - r][c] })
-            val evaluatedLane = lane.evaluate()
+            val result = lane.evaluate()
+            scoreDelta += result.scoreDelta
             for (r in 0 until board.size) {
-                newBoard.setCellValue(board.size - 1 - r, c, evaluatedLane.cells[r])
+                newBoard.setCellValue(board.size - 1 - r, c, result.cells[r])
             }
         }
+        newBoard.score = this.score + scoreDelta
         return newBoard
     }
 
