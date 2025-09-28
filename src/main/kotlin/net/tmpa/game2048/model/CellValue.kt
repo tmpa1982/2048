@@ -1,6 +1,6 @@
 package net.tmpa.game2048.model
 
-enum class CellValue(val value: Int) {
+enum class CellValue(val value: Int, val hasNext: Boolean = true) {
     EMPTY(0),
     V2(2),
     V4(4),
@@ -12,8 +12,8 @@ enum class CellValue(val value: Int) {
     V256(256),
     V512(512),
     V1024(1024),
-    V2048(2048),
-    OBSTACLE(-1),
+    V2048(2048, false),
+    OBSTACLE(-1, false),
     ;
 
     fun getNext(): CellValue {
