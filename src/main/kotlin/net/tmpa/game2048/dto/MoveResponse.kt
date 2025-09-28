@@ -4,4 +4,5 @@ class MoveResponse(
     val isWinning: Boolean,
     val isLosing: Boolean,
     val board: BoardDto,
+    val score: Int,
 )

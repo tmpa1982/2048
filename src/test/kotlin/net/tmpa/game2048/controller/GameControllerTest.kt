@@ -1,5 +1,6 @@
 package net.tmpa.game2048.controller
 
+import net.tmpa.game2048.dto.CreateGameRequest
 import net.tmpa.game2048.dto.CreateGameResponse
 import net.tmpa.game2048.dto.MoveRequest
 import net.tmpa.game2048.dto.MoveResponse
@@ -27,7 +28,8 @@ class GameControllerIntegrationTest : IntegrationTestBase() {
         val initialBoard = response.body!!.board.cells
         assertInitialBoard(initialBoard)
 
-        val newBoardCells = move(gameId, MoveDirection.DOWN)
+        val moveResponse = move(gameId, MoveDirection.DOWN)
+        val newBoardCells = moveResponse.board.cells
         assertBoardMovedDownExceptMaybeOne(newBoardCells)
 
         val initialBoardSum = initialBoard.flatten().sumOf { it.value }
@@ -50,21 +52,22 @@ class GameControllerIntegrationTest : IntegrationTestBase() {
 
         repository.add(gameId, board)
 
-        val newBoardCells = move(gameId, MoveDirection.LEFT)
+        val response = move(gameId, MoveDirection.LEFT)
+        assertEquals(0, response.score)
+        val newBoardCells = response.board.cells
         val countByValue = newBoardCells.flatten().groupBy { it }.map { it.key to it.value.size }.toMap()
         assertEquals(1, countByValue[CellValue.V4])
         assertEquals(2, countByValue[CellValue.V2])
         assertEquals(board.size * board.size - 3, countByValue[CellValue.EMPTY])
     }
 
-    private fun move(gameId: String, direction: MoveDirection): List<List<CellValue>> {
+    private fun move(gameId: String, direction: MoveDirection): MoveResponse {
         val moveRequest = MoveRequest(direction)
         val moveResponse = restTemplate.postForEntity("/api/game/$gameId/move", moveRequest, MoveResponse::class.java)
         val moveBody = moveResponse.body!!
         assertFalse(moveBody.isLosing)
         assertFalse(moveBody.isWinning)
-        val newBoardCells = moveBody.board.cells
-        return newBoardCells
+        return moveBody
     }
 
     private fun assertInitialBoard(board: List<List<CellValue>>) {
