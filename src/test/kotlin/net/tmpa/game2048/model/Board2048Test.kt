@@ -399,4 +399,46 @@ class Board2048Test {
             }
         }
     }
+
+    @Nested
+    inner class ScorePreservation {
+        @Test
+        fun `score is preserved when adding random cell`() {
+            val board = Board2048(
+                listOf(
+                    listOf(CellValue.V2, CellValue.EMPTY),
+                    listOf(CellValue.EMPTY, CellValue.EMPTY),
+                ),
+                score = 42,
+            )
+            val newBoard = board.addRandomCell()
+            assertEquals(42, newBoard.score)
+        }
+
+        @Test
+        fun `score is preserved when no cells are merged during move`() {
+            val board = Board2048(
+                listOf(
+                    listOf(CellValue.V2, CellValue.V4),
+                    listOf(CellValue.EMPTY, CellValue.EMPTY),
+                ),
+                score = 42,
+            )
+            val newBoard = board.nextBoard(MoveDirection.LEFT)
+            assertEquals(42, newBoard.score)
+        }
+
+        @Test
+        fun `score is preserved when move and generate random cell is called`() {
+            val board = Board2048(
+                listOf(
+                    listOf(CellValue.V2, CellValue.V4),
+                    listOf(CellValue.EMPTY, CellValue.EMPTY),
+                ),
+                score = 42,
+            )
+            val newBoard = board.nextBoardAndCell(MoveDirection.DOWN)
+            assertEquals(42, newBoard.score)
+        }
+    }
 }

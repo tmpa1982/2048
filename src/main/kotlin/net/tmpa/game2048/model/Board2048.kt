@@ -94,6 +94,7 @@ class Board2048(
         require(board[r][c] == CellValue.EMPTY)
         val newBoard = Board2048(this.board.map { it.toList() })
         newBoard.setCellValue(r, c, valueGenerator())
+        newBoard.score = this.score
         return newBoard
     }
 

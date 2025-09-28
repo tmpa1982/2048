@@ -61,6 +61,30 @@ class GameControllerIntegrationTest : IntegrationTestBase() {
         assertEquals(board.size * board.size - 3, countByValue[CellValue.EMPTY])
     }
 
+    @Test
+    fun `merges cells and updates score`() {
+        val gameId = UUID.randomUUID().toString()
+        val board = Board2048(
+            listOf(
+                listOf(CellValue.V4, CellValue.V4, CellValue.V8, CellValue.V8),
+                listOf(CellValue.EMPTY, CellValue.EMPTY, CellValue.EMPTY, CellValue.EMPTY),
+                listOf(CellValue.EMPTY, CellValue.EMPTY, CellValue.EMPTY, CellValue.EMPTY),
+                listOf(CellValue.EMPTY, CellValue.EMPTY, CellValue.EMPTY, CellValue.EMPTY),
+            ),
+            score = 4
+        )
+
+        repository.add(gameId, board)
+
+        val response = move(gameId, MoveDirection.LEFT)
+        assertEquals(4 + 8 + 16, response.score)
+        val newBoardCells = response.board.cells
+        val countByValue = newBoardCells.flatten().groupBy { it }.map { it.key to it.value.size }.toMap()
+        assertEquals(1, countByValue[CellValue.V8])
+        assertEquals(1, countByValue[CellValue.V16])
+        assertEquals(board.size * board.size - 3, countByValue[CellValue.EMPTY])
+    }
+
     private fun move(gameId: String, direction: MoveDirection): MoveResponse {
         val moveRequest = MoveRequest(direction)
         val moveResponse = restTemplate.postForEntity("/api/game/$gameId/move", moveRequest, MoveResponse::class.java)
